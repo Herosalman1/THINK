@@ -5,41 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-  <title>Surprise For You!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Surprise Link Generator</title>
 
   <style>
     * { padding: 0; margin: 0; box-sizing: border-box; font-family: "Quicksand", sans-serif; }
-    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #fae6e9; overflow: hidden; }
     
-    /* --- 1. GENERATOR UI (Form) --- */
-    #generator-ui { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(239, 110, 126, 0.2); z-index: 100; }
-    #generator-ui h2 { text-align: center; color: #ef6e7e; margin-bottom: 20px; font-weight: 700; }
-    #generator-ui label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
-    #generator-ui input { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 2px solid #fbd9de; background: #fff; color: #111; font-size: 1rem; outline: none; }
-    #generator-ui input:focus { border-color: #ef6e7e; }
-    #generator-ui button { width: 100%; background: #ef6e7e; border: none; padding: 15px; border-radius: 50px; color: white; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-bottom: 15px; box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35); }
-    #generator-ui button:hover { background-color: #df5869; transform: scale(1.02); }
-    .result-box { display: none; background: #fdf2f4; padding: 15px; border-radius: 8px; margin-top: 10px; word-break: break-all; font-size: 0.85rem; border: 1px dashed #ef6e7e; }
+    /* --- ANIMATED PREMIUM BACKGROUND --- */
+    body { 
+        display: flex; justify-content: center; align-items: center; min-height: 100vh; 
+        background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #fccb90, #ff9a9e);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        overflow: hidden; 
+    }
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* --- 1. PREMIUM GENERATOR UI (Glassmorphism) --- */
+    #generator-ui { 
+        background: rgba(255, 255, 255, 0.85); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 40px 35px; 
+        border-radius: 24px; 
+        width: 90%; 
+        max-width: 480px; 
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255,255,255,0.5); 
+        z-index: 100; 
+        transition: all 0.3s ease;
+    }
+    #generator-ui h2 { 
+        text-align: center; 
+        background: linear-gradient(45deg, #ff758c, #ff7eb3);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 30px; 
+        font-weight: 700; 
+        font-size: 1.8rem;
+        letter-spacing: -0.5px;
+    }
+    .input-group { margin-bottom: 20px; text-align: left; }
+    .input-group label { 
+        display: block; margin-bottom: 8px; font-weight: 600; color: #4a4a4a; font-size: 0.95rem; 
+    }
+    .input-group input { 
+        width: 100%; padding: 14px 18px; border-radius: 12px; 
+        border: 2px solid #e2e8f0; background: #f8fafc; color: #1e293b; 
+        font-size: 1rem; font-weight: 500; outline: none; transition: all 0.3s ease; 
+    }
+    .input-group input:focus { 
+        border-color: #ff758c; background: #fff;
+        box-shadow: 0 0 0 4px rgba(255, 117, 140, 0.15); 
+    }
+    #generateBtn { 
+        width: 100%; 
+        background: linear-gradient(135deg, #ff758c, #ff7eb3); 
+        border: none; padding: 16px; border-radius: 14px; color: white; 
+        font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; 
+        margin-top: 10px; margin-bottom: 15px; 
+        box-shadow: 0 8px 20px rgba(255, 117, 140, 0.3); 
+    }
+    #generateBtn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(255, 117, 140, 0.4); }
+    #generateBtn:active { transform: translateY(0); }
+    
+    .result-box { 
+        display: none; background: #fff0f3; padding: 20px; border-radius: 16px; 
+        margin-top: 15px; word-break: break-all; font-size: 0.9rem; 
+        border: 1.5px dashed #ffb3c6; animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    
+    #copyBtn {
+        background: #475569; color: white; border: none; padding: 12px; width: 100%;
+        border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s;
+    }
+    #copyBtn:hover { background: #334155; }
 
     /* --- 2. PRANK UI & SUCCESS UI --- */
-    #prank-ui, #success-ui { display: none; flex-direction: column; align-items: center; text-align: center; z-index: 10; padding: 0 15px; }
-    .local-gif { width: 250px; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; pointer-events: none; background-color: transparent; }
-    .question { font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 700; color: #111; margin-bottom: 25px; letter-spacing: -0.5px; word-break: break-word; }
+    #prank-ui, #success-ui { display: none; flex-direction: column; align-items: center; text-align: center; z-index: 10; padding: 0 20px; }
+    .local-gif { width: 280px; height: 280px; object-fit: cover; border-radius: 20px; margin-bottom: 25px; pointer-events: none; background-color: transparent; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));}
+    .question { font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; color: #111; margin-bottom: 30px; letter-spacing: -0.5px; word-break: break-word; line-height: 1.2; text-shadow: 0 2px 10px rgba(255,255,255,0.5);}
     .button-container { display: flex; gap: 20px; justify-content: center; align-items: center; }
-    .btn { border: none; border-radius: 50px; padding: 10px 32px; font-size: 1.1rem; font-weight: 600; cursor: pointer; background-color: #ef6e7e; color: white; box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35); transition: transform 0.2s ease, background-color 0.2s ease; }
-    .btn:hover { background-color: #df5869; transform: scale(1.05); }
-    .no-btn { transition: top 0.2s ease, left 0.2s ease; }
-
+    .btn { border: none; border-radius: 50px; padding: 14px 40px; font-size: 1.2rem; font-weight: 700; cursor: pointer; color: white; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .yes-btn { background: linear-gradient(135deg, #4ade80, #22c55e); box-shadow: 0px 8px 20px rgba(34, 197, 94, 0.4); }
+    .yes-btn:hover { transform: scale(1.05); box-shadow: 0px 12px 25px rgba(34, 197, 94, 0.5); }
+    .no-btn { background: linear-gradient(135deg, #fb7185, #f43f5e); box-shadow: 0px 8px 20px rgba(244, 63, 94, 0.4); transition: top 0.2s ease, left 0.2s ease; position: relative;}
+    
     /* --- 3. LOADER ANIMATION --- */
     #loader-ui { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20; }
     #loader-ui * { font-size: 62px; }
     .cssload-heart { animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; top: 50%; left: 50%; position: absolute; }
-    .cssload-heartL, .cssload-heartR, .cssload-square { width: 1em; height: 1em; background-color: #ff0000; border: 1px solid #ff0000; position: absolute; display: block; }
+    .cssload-heartL, .cssload-heartR, .cssload-square { width: 1em; height: 1em; background-color: #ff4b2b; border: 1px solid #ff4b2b; position: absolute; display: block; }
     .cssload-heartL { border-radius: 100%; transform: translate(-28px, -27px); animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
     .cssload-heartR { border-radius: 100%; transform: translate(28px, -27px); animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
     .cssload-square { transform: scale(1) rotate(-45deg); animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
-    .cssload-shadow { top: 97px; left: 50%; position: relative; display: block; width: 1em; height: 0.24em; background-color: rgb(215, 215, 215); border-radius: 50%; transform: translateX(-50%); animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
+    .cssload-shadow { top: 97px; left: 50%; position: relative; display: block; width: 1em; height: 0.24em; background-color: rgba(0,0,0,0.1); border-radius: 50%; transform: translateX(-50%); animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
     @keyframes cssload-square { 50% { border-radius: 100%; transform: scale(0.5) rotate(-45deg); } 100% { transform: scale(1) rotate(-45deg); } }
     @keyframes cssload-heart { 50% { transform: rotate(360deg); } 100% { transform: rotate(720deg); } }
     @keyframes cssload-heartL { 60% { transform: scale(0.4) translate(-28px, -27px); } }
@@ -49,22 +113,26 @@
 </head>
 <body>
 
-  <!-- ================= UI 1: LINK GENERATOR ================= -->
+  <!-- ================= UI 1: PREMIUM LINK GENERATOR ================= -->
   <div id="generator-ui">
-    <h2>Prank Link Generator 🐻</h2>
+    <h2>Prank Link Generator</h2>
     
-    <label>1ST MSG (Sawal / Question):</label>
-    <input type="text" id="qInput" value="या तुम मेरे दोस्त बनोगे?" autocomplete="off">
+    <div class="input-group">
+        <label>1ST MSG (Main Question)</label>
+        <input type="text" id="qInput" value="या तुम मेरे दोस्त बनोगे?" autocomplete="off">
+    </div>
     
-    <label>2ND MSG (Success / Manne ke baad):</label>
-    <input type="text" id="sInput" value="BN GYE NA MERE DOST" autocomplete="off">
+    <div class="input-group">
+        <label>2ND MSG (Success Message)</label>
+        <input type="text" id="sInput" value="BN GYE NA MERE DOST 😁" autocomplete="off">
+    </div>
     
-    <button onclick="generateLink()">Generate Link 🔗</button>
+    <button id="generateBtn" onclick="generateLink()">✨ Generate Link</button>
 
     <div id="resultBox" class="result-box">
-        <p style="font-weight: 600; color: #ef6e7e; margin-bottom: 5px;">Copy and Send to Friend:</p>
-        <p id="generatedUrl" style="margin-bottom: 15px; font-weight: 500;"></p>
-        <button onclick="copyLink()" style="padding: 10px; font-size: 0.9rem;">Copy Link 📋</button>
+        <p style="font-weight: 700; color: #e11d48; margin-bottom: 8px; font-size: 0.95rem;">Link Ready! Copy & Send:</p>
+        <p id="generatedUrl" style="margin-bottom: 18px; font-weight: 600; color: #334155; line-height: 1.4;"></p>
+        <button id="copyBtn" onclick="copyLink()">📋 Copy Link</button>
     </div>
   </div>
 
@@ -82,7 +150,7 @@
   <!-- ================= UI 3: SUCCESS SCREEN ================= -->
   <div id="success-ui">
     <img class="local-gif" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
-    <h2 class="question" id="dynamic-success">BN GYE NA MERE DOST</h2>
+    <h2 class="question" id="dynamic-success">BN GYE NA MERE DOST 😁</h2>
   </div>
 
   <!-- ================= UI 4: LOADER ================= -->
@@ -104,15 +172,11 @@
         
         // Agar URL me Data hai -> Friend ne open kiya hai
         if (dataParam) {
-            // Form ko hide karo aur Prank show karo
             document.getElementById('generator-ui').style.display = 'none';
             document.getElementById('prank-ui').style.display = 'flex';
             
             try {
-                // Link me chhupe hue data ko bahar nikalo
                 const decoded = JSON.parse(decodeURIComponent(escape(atob(dataParam))));
-                
-                // HTML me text change karo
                 if(decoded.q) document.getElementById('dynamic-question').innerText = decoded.q;
                 if(decoded.s) document.getElementById('dynamic-success').innerText = decoded.s;
             } catch(e) {
@@ -131,7 +195,6 @@
         const payload = { q: q, s: s };
         const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
         
-        // Current website ka URL uthao (binna purane data ke)
         let baseUrl = window.location.href.split('?')[0];
         const finalLink = `${baseUrl}?d=${encodedData}`;
         
@@ -142,7 +205,13 @@
     function copyLink() {
         const linkText = document.getElementById('generatedUrl').innerText;
         navigator.clipboard.writeText(linkText).then(() => {
-            alert("Link Copied! Ab ise WhatsApp par bhej dein.");
+            const btn = document.getElementById('copyBtn');
+            btn.innerText = "✅ Copied!";
+            btn.style.background = "#22c55e";
+            setTimeout(() => {
+                btn.innerText = "📋 Copy Link";
+                btn.style.background = "#475569";
+            }, 2000);
         });
     }
 
