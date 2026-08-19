@@ -5,105 +5,180 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <title>Surprise Link Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <title>Do you love me?</title>
 
   <style>
-    * { padding: 0; margin: 0; box-sizing: border-box; font-family: "Quicksand", sans-serif; }
-    
-    /* --- ANIMATED PREMIUM BACKGROUND --- */
-    body { 
-        display: flex; justify-content: center; align-items: center; min-height: 100vh; 
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    /* Default Body setup */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: "Quicksand", sans-serif;
+      overflow: hidden;
+      transition: background 0.5s ease;
+    }
+
+    /* --- GENERATOR PREMIUM BACKGROUND --- */
+    .bg-generator {
         background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #fccb90, #ff9a9e);
         background-size: 400% 400%;
         animation: gradientBG 15s ease infinite;
-        overflow: hidden; 
     }
     @keyframes gradientBG {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
-    
-    /* --- 1. PREMIUM GENERATOR UI (Glassmorphism) --- */
+
+    /* --- FRIEND ORIGINAL BACKGROUND --- */
+    .bg-prank {
+        background-color: #fae6e9; /* Original Color from your code */
+    }
+
+    /* =========================================
+       1. PREMIUM GENERATOR UI (Glassmorphism)
+       ========================================= */
     #generator-ui { 
-        background: rgba(255, 255, 255, 0.85); 
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.9); 
         padding: 40px 35px; 
         border-radius: 24px; 
         width: 90%; 
         max-width: 480px; 
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255,255,255,0.5); 
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); 
         z-index: 100; 
-        transition: all 0.3s ease;
     }
     #generator-ui h2 { 
-        text-align: center; 
-        background: linear-gradient(45deg, #ff758c, #ff7eb3);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 30px; 
-        font-weight: 700; 
-        font-size: 1.8rem;
-        letter-spacing: -0.5px;
+        text-align: center; color: #ef6e7e; margin-bottom: 30px; font-weight: 700; font-size: 1.8rem;
     }
     .input-group { margin-bottom: 20px; text-align: left; }
-    .input-group label { 
-        display: block; margin-bottom: 8px; font-weight: 600; color: #4a4a4a; font-size: 0.95rem; 
-    }
+    .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #4a4a4a; font-size: 0.95rem; }
     .input-group input { 
-        width: 100%; padding: 14px 18px; border-radius: 12px; 
-        border: 2px solid #e2e8f0; background: #f8fafc; color: #1e293b; 
-        font-size: 1rem; font-weight: 500; outline: none; transition: all 0.3s ease; 
+        width: 100%; padding: 14px 18px; border-radius: 12px; border: 2px solid #fbd9de; 
+        background: #fdf2f4; color: #111; font-size: 1rem; font-weight: 500; outline: none; 
     }
-    .input-group input:focus { 
-        border-color: #ff758c; background: #fff;
-        box-shadow: 0 0 0 4px rgba(255, 117, 140, 0.15); 
-    }
+    .input-group input:focus { border-color: #ef6e7e; background: #fff; }
+    
     #generateBtn { 
-        width: 100%; 
-        background: linear-gradient(135deg, #ff758c, #ff7eb3); 
-        border: none; padding: 16px; border-radius: 14px; color: white; 
-        font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; 
-        margin-top: 10px; margin-bottom: 15px; 
-        box-shadow: 0 8px 20px rgba(255, 117, 140, 0.3); 
+        width: 100%; background: #ef6e7e; border: none; padding: 16px; border-radius: 14px; 
+        color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 10px; margin-bottom: 15px; 
     }
-    #generateBtn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(255, 117, 140, 0.4); }
-    #generateBtn:active { transform: translateY(0); }
+    #generateBtn:hover { background-color: #df5869; }
     
     .result-box { 
         display: none; background: #fff0f3; padding: 20px; border-radius: 16px; 
-        margin-top: 15px; word-break: break-all; font-size: 0.9rem; 
-        border: 1.5px dashed #ffb3c6; animation: fadeIn 0.5s ease;
+        margin-top: 15px; word-break: break-all; font-size: 0.9rem; border: 1.5px dashed #ffb3c6;
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    
     #copyBtn {
-        background: #475569; color: white; border: none; padding: 12px; width: 100%;
-        border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s;
+        background: #ef6e7e; color: white; border: none; padding: 12px; width: 100%;
+        border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 10px;
     }
-    #copyBtn:hover { background: #334155; }
 
-    /* --- 2. PRANK UI & SUCCESS UI --- */
-    #prank-ui, #success-ui { display: none; flex-direction: column; align-items: center; text-align: center; z-index: 10; padding: 0 20px; }
-    .local-gif { width: 280px; height: 280px; object-fit: cover; border-radius: 20px; margin-bottom: 25px; pointer-events: none; background-color: transparent; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));}
-    .question { font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; color: #111; margin-bottom: 30px; letter-spacing: -0.5px; word-break: break-word; line-height: 1.2; text-shadow: 0 2px 10px rgba(255,255,255,0.5);}
-    .button-container { display: flex; gap: 20px; justify-content: center; align-items: center; }
-    .btn { border: none; border-radius: 50px; padding: 14px 40px; font-size: 1.2rem; font-weight: 700; cursor: pointer; color: white; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .yes-btn { background: linear-gradient(135deg, #4ade80, #22c55e); box-shadow: 0px 8px 20px rgba(34, 197, 94, 0.4); }
-    .yes-btn:hover { transform: scale(1.05); box-shadow: 0px 12px 25px rgba(34, 197, 94, 0.5); }
-    .no-btn { background: linear-gradient(135deg, #fb7185, #f43f5e); box-shadow: 0px 8px 20px rgba(244, 63, 94, 0.4); transition: top 0.2s ease, left 0.2s ease; position: relative;}
-    
-    /* --- 3. LOADER ANIMATION --- */
-    #loader-ui { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20; }
-    #loader-ui * { font-size: 62px; }
+    /* =========================================
+       2. ORIGINAL PRANK UI EXACT CSS 
+       ========================================= */
+    .question-container {
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .local-gif {
+      width: 250px; 
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      pointer-events: none;
+      background-color: transparent; 
+    }
+
+    .question {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 25px;
+      letter-spacing: -0.5px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px; 
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 50px; 
+      padding: 10px 32px;
+      font-family: "Quicksand", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #ef6e7e; 
+      color: white;
+      box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35); 
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #df5869;
+      transform: scale(1.05);
+    }
+
+    .no-btn {
+      transition: top 0.2s ease, left 0.2s ease; 
+    }
+
+    .result-container {
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .gif-result {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .result-container h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #111;
+    }
+
+    /* --- Heart Loader --- */
+    .cssload-main {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+    }
+
+    .cssload-main * { font-size: 62px; }
     .cssload-heart { animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; top: 50%; left: 50%; position: absolute; }
-    .cssload-heartL, .cssload-heartR, .cssload-square { width: 1em; height: 1em; background-color: #ff4b2b; border: 1px solid #ff4b2b; position: absolute; display: block; }
+    .cssload-heartL, .cssload-heartR, .cssload-square { width: 1em; height: 1em; background-color: #ff0000; border: 1px solid #ff0000; position: absolute; display: block; }
     .cssload-heartL { border-radius: 100%; transform: translate(-28px, -27px); animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
     .cssload-heartR { border-radius: 100%; transform: translate(28px, -27px); animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
     .cssload-square { transform: scale(1) rotate(-45deg); animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
-    .cssload-shadow { top: 97px; left: 50%; position: relative; display: block; width: 1em; height: 0.24em; background-color: rgba(0,0,0,0.1); border-radius: 50%; transform: translateX(-50%); animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
+    .cssload-shadow { top: 97px; left: 50%; position: relative; display: block; width: 1em; height: 0.24em; background-color: rgb(215, 215, 215); border-radius: 50%; transform: translateX(-50%); animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
     @keyframes cssload-square { 50% { border-radius: 100%; transform: scale(0.5) rotate(-45deg); } 100% { transform: scale(1) rotate(-45deg); } }
     @keyframes cssload-heart { 50% { transform: rotate(360deg); } 100% { transform: rotate(720deg); } }
     @keyframes cssload-heartL { 60% { transform: scale(0.4) translate(-28px, -27px); } }
@@ -111,7 +186,7 @@
     @keyframes cssload-shadow { 50% { transform: translateX(-50%) scale(0.5); } }
   </style>
 </head>
-<body>
+<body class="bg-generator" id="mainBody">
 
   <!-- ================= UI 1: PREMIUM LINK GENERATOR ================= -->
   <div id="generator-ui">
@@ -130,31 +205,31 @@
     <button id="generateBtn" onclick="generateLink()">✨ Generate Link</button>
 
     <div id="resultBox" class="result-box">
-        <p style="font-weight: 700; color: #e11d48; margin-bottom: 8px; font-size: 0.95rem;">Link Ready! Copy & Send:</p>
-        <p id="generatedUrl" style="margin-bottom: 18px; font-weight: 600; color: #334155; line-height: 1.4;"></p>
+        <p style="font-weight: 700; color: #ef6e7e; margin-bottom: 8px;">Copy and Send to Friend:</p>
+        <p id="generatedUrl" style="margin-bottom: 10px; font-weight: 600; color: #333;"></p>
         <button id="copyBtn" onclick="copyLink()">📋 Copy Link</button>
     </div>
   </div>
 
-  <!-- ================= UI 2: PRANK SCREEN ================= -->
-  <div id="prank-ui">
+  <!-- ================= UI 2: ORIGINAL PRANK SCREEN ================= -->
+  <div class="question-container js-question-container" id="prank-ui">
     <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
     <h2 class="question" id="dynamic-question">या तुम मेरे दोस्त बनोगे?</h2>
     
     <div class="button-container">
-      <button class="btn yes-btn" id="yesBtn">Yes</button>
-      <button class="btn no-btn" id="noBtn">No</button>
+      <button class="btn yes-btn js-yes-btn">Yes</button>
+      <button class="btn no-btn js-no-btn">No</button>
     </div>
   </div>
   
-  <!-- ================= UI 3: SUCCESS SCREEN ================= -->
-  <div id="success-ui">
-    <img class="local-gif" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
-    <h2 class="question" id="dynamic-success">Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
+  <!-- ================= UI 3: ORIGINAL SUCCESS SCREEN ================= -->
+  <div class="result-container js-result-container" id="success-ui">
+    <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
+    <h2 id="dynamic-success">Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
   </div>
 
-  <!-- ================= UI 4: LOADER ================= -->
-  <div id="loader-ui">
+  <!-- ================= UI 4: ORIGINAL LOADER ================= -->
+  <div class="cssload-main js-cssload-main" id="loader-ui">
     <div class="cssload-heart">
       <span class="cssload-heartL"></span>
       <span class="cssload-heartR"></span>
@@ -170,8 +245,12 @@
         const urlParams = new URLSearchParams(window.location.search);
         const dataParam = urlParams.get('d');
         
-        // Agar URL me Data hai -> Friend ne open kiya hai
+        // Agar dost ne link khola hai
         if (dataParam) {
+            // Background badal do original theme me!
+            document.getElementById('mainBody').className = 'bg-prank';
+            
+            // UI Hide & Show
             document.getElementById('generator-ui').style.display = 'none';
             document.getElementById('prank-ui').style.display = 'flex';
             
@@ -190,7 +269,7 @@
         const q = document.getElementById('qInput').value.trim();
         const s = document.getElementById('sInput').value.trim();
         
-        if(!q || !s) { alert("Dono messages bharna zaroori hai!"); return; }
+        if(!q || !s) { alert("Please enter both messages!"); return; }
 
         const payload = { q: q, s: s };
         const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
@@ -207,17 +286,17 @@
         navigator.clipboard.writeText(linkText).then(() => {
             const btn = document.getElementById('copyBtn');
             btn.innerText = "✅ Copied!";
-            btn.style.background = "#22c55e";
-            setTimeout(() => {
-                btn.innerText = "📋 Copy Link";
-                btn.style.background = "#475569";
-            }, 2000);
+            setTimeout(() => { btn.innerText = "📋 Copy Link"; }, 2000);
         });
     }
 
-    // 3. PRANK LOGIC (No Button Bhagana)
-    const noBtn = document.getElementById("noBtn");
-    
+    // 3. ORIGINAL PRANK LOGIC
+    const questionContainer = document.querySelector(".js-question-container");
+    const resultContainer = document.querySelector(".js-result-container");
+    const heartLoader = document.querySelector(".js-cssload-main");
+    const yesBtn = document.querySelector(".js-yes-btn");
+    const noBtn = document.querySelector(".js-no-btn");
+
     const moveNoBtn = () => {
       noBtn.style.position = 'fixed';
       const maxX = window.innerWidth - noBtn.offsetWidth - 20; 
@@ -231,14 +310,13 @@
     noBtn.addEventListener("mouseover", moveNoBtn);
     noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoBtn(); });
 
-    // Yes Button Click karne par Loader aur Success
-    document.getElementById("yesBtn").addEventListener("click", () => {
-      document.getElementById("prank-ui").style.display = "none";
-      document.getElementById("loader-ui").style.display = "block";
+    yesBtn.addEventListener("click", () => {
+      questionContainer.style.display = "none";
+      heartLoader.style.display = "block";
 
       setTimeout(() => {
-        document.getElementById("loader-ui").style.display = "none";
-        document.getElementById("success-ui").style.display = "flex"; 
+        heartLoader.style.display = "none";
+        resultContainer.style.display = "flex"; 
       }, 3000);
     });
   </script>
