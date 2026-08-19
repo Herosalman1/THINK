@@ -51,6 +51,24 @@
       letter-spacing: -0.5px;
     }
 
+    .custom-message-box {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #e0556a;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 15px 30px;
+      border-radius: 30px;
+      backdrop-filter: blur(5px);
+      max-width: 450px;
+      line-height: 1.6;
+    }
+
+    .custom-message-box .name-highlight {
+      color: #2d1b1f;
+      font-weight: 700;
+    }
+
     .button-container {
       display: flex;
       gap: 20px;
@@ -98,7 +116,7 @@
     }
 
     .result-container h2 {
-      font-size: 3rem;
+      font-size: 2.8rem;
       font-weight: 700;
       color: #111;
     }
@@ -204,6 +222,11 @@
   <div class="question-container js-question-container">
     <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
 
+    <!-- यहाँ Custom MSG दिखेगा -->
+    <div class="custom-message-box" id="customMsgDisplay">
+      ❤️ <span class="name-highlight" id="friendNameDisplay">तुम</span> बहुत खास हो! 💖
+    </div>
+
     <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
 
     <div class="button-container">
@@ -229,6 +252,35 @@
   </div>
 
   <script>
+    // ===== URL से Data पढ़ो =====
+    function getDataFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedData = urlParams.get('d');
+        
+        if (!encodedData) return null;
+        
+        try {
+            const jsonString = decodeURIComponent(escape(atob(encodedData)));
+            return JSON.parse(jsonString);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // ===== MSG Show करो =====
+    const data = getDataFromURL();
+    if (data) {
+        const nameDisplay = document.getElementById('friendNameDisplay');
+        const msgDisplay = document.getElementById('customMsgDisplay');
+        
+        // Name set करो
+        nameDisplay.textContent = data.n || 'तुम';
+        
+        // पूरा MSG set करो
+        msgDisplay.innerHTML = `💝 ${data.m || 'तुम बहुत खास हो!'} 💝`;
+    }
+
+    // ===== Game Logic =====
     const questionContainer = document.querySelector(".js-question-container");
     const resultContainer = document.querySelector(".js-result-container");
     const heartLoader = document.querySelector(".js-cssload-main");
