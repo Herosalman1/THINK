@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>❤️ तुम्हारे लिए एक खास पेज</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fce4ec 0%, #f8d7da 100%);
+            font-family: "Quicksand", sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 245, 247, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 3rem 2.5rem;
+            border-radius: 60px;
+            box-shadow: 0 25px 50px rgba(190, 90, 100, 0.25);
+            text-align: center;
+            max-width: 550px;
+            width: 92%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .heart-icon {
+            font-size: 4rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #2d1b1f;
+            margin: 0.8rem 0 0.5rem;
+            font-weight: 700;
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 1.5rem 1.8rem;
+            border-radius: 30px;
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #2d1b1f;
+            font-weight: 500;
+            border: 1px solid rgba(255, 200, 210, 0.3);
+        }
+
+        .message-box .highlight {
+            color: #e0556a;
+            font-weight: 700;
+        }
+
+        .btn-surprise {
+            background: #ec6b7a;
+            color: white;
+            border: none;
+            border-radius: 120px;
+            padding: 1rem 3rem;
+            font-family: "Quicksand", sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(225, 80, 100, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 0.5rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-surprise:hover {
+            transform: scale(1.05);
+            box-shadow: 0 14px 35px rgba(225, 80, 100, 0.5);
+            background: #de5b6b;
+        }
+
+        .btn-surprise:active {
+            transform: scale(0.97);
+        }
+
+        .footer-note {
+            margin-top: 1.8rem;
+            font-size: 0.95rem;
+            color: #7a5a62;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 2rem 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .message-box {
+                font-size: 1rem;
+                padding: 1rem 1.2rem;
+            }
+            .btn-surprise {
+                font-size: 1rem;
+                padding: 0.8rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <!-- ❤️ इमोजी एनीमेशन -->
+        <div class="heart-icon">❤️</div>
+
+        <h1>✨ तुम्हारे लिए... ✨</h1>
+
+        <!-- 👇 यहाँ अपना प्यारा सा संदेश लिखो -->
+        <div class="message-box">
+            <p>
+                तुम मेरी ज़िंदगी की <span class="highlight">खास</span> वजह हो 🥰<br />
+                तुम्हारी मुस्कान मेरा दिन बना देती है 🌸<br />
+                बस यही कहना था...<br />
+                <span style="font-size:1.4rem;">💖 तुम बहुत खास हो 💖</span>
+            </p>
+        </div>
+
+        <!-- 👇 यह बटन surprise.html खोलेगा -->
+        <a href="surprise.html" class="btn-surprise">🎁 सरप्राइज़ देखो 🎁</a>
+
+        <div class="footer-note">💫 दिल से दिल तक... ❤️</div>
+    </div>
+
+</body>
+</html>
