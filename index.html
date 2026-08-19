@@ -1,76 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friendship Link Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Quicksand", sans-serif; }
-        body { background-color: #fae6e9; color: #111; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-        .container { background: white; padding: 30px; border-radius: 15px; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(239, 110, 126, 0.2); }
-        h2 { text-align: center; color: #ef6e7e; margin-bottom: 20px; font-weight: 700; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 2px solid #fbd9de; background: #fff; color: #111; font-size: 1rem; outline: none; }
-        input:focus, textarea:focus { border-color: #ef6e7e; }
-        textarea { resize: vertical; height: 100px; }
-        button { width: 100%; background: #ef6e7e; border: none; padding: 15px; border-radius: 50px; color: white; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-bottom: 15px; box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35); }
-        button:hover { background-color: #df5869; transform: scale(1.02); }
-        .result-box { display: none; background: #fdf2f4; padding: 15px; border-radius: 8px; margin-top: 10px; word-break: break-all; font-size: 0.85rem; border: 1px dashed #ef6e7e; }
-        .result-title { font-size: 0.9rem; color: #ef6e7e; margin-bottom: 8px; font-weight: 600; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <title>Surprise For You!</title>
+
+  <style>
+    * { padding: 0; margin: 0; box-sizing: border-box; font-family: "Quicksand", sans-serif; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #fae6e9; overflow: hidden; }
+    
+    /* --- 1. GENERATOR UI (Form) --- */
+    #generator-ui { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(239, 110, 126, 0.2); z-index: 100; }
+    #generator-ui h2 { text-align: center; color: #ef6e7e; margin-bottom: 20px; font-weight: 700; }
+    #generator-ui label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+    #generator-ui input { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 2px solid #fbd9de; background: #fff; color: #111; font-size: 1rem; outline: none; }
+    #generator-ui input:focus { border-color: #ef6e7e; }
+    #generator-ui button { width: 100%; background: #ef6e7e; border: none; padding: 15px; border-radius: 50px; color: white; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-bottom: 15px; box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35); }
+    #generator-ui button:hover { background-color: #df5869; transform: scale(1.02); }
+    .result-box { display: none; background: #fdf2f4; padding: 15px; border-radius: 8px; margin-top: 10px; word-break: break-all; font-size: 0.85rem; border: 1px dashed #ef6e7e; }
+
+    /* --- 2. PRANK UI & SUCCESS UI --- */
+    #prank-ui, #success-ui { display: none; flex-direction: column; align-items: center; text-align: center; z-index: 10; padding: 0 15px; }
+    .local-gif { width: 250px; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; pointer-events: none; background-color: transparent; }
+    .question { font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 700; color: #111; margin-bottom: 25px; letter-spacing: -0.5px; word-break: break-word; }
+    .button-container { display: flex; gap: 20px; justify-content: center; align-items: center; }
+    .btn { border: none; border-radius: 50px; padding: 10px 32px; font-size: 1.1rem; font-weight: 600; cursor: pointer; background-color: #ef6e7e; color: white; box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35); transition: transform 0.2s ease, background-color 0.2s ease; }
+    .btn:hover { background-color: #df5869; transform: scale(1.05); }
+    .no-btn { transition: top 0.2s ease, left 0.2s ease; }
+
+    /* --- 3. LOADER ANIMATION --- */
+    #loader-ui { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20; }
+    #loader-ui * { font-size: 62px; }
+    .cssload-heart { animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; top: 50%; left: 50%; position: absolute; }
+    .cssload-heartL, .cssload-heartR, .cssload-square { width: 1em; height: 1em; background-color: #ff0000; border: 1px solid #ff0000; position: absolute; display: block; }
+    .cssload-heartL { border-radius: 100%; transform: translate(-28px, -27px); animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
+    .cssload-heartR { border-radius: 100%; transform: translate(28px, -27px); animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
+    .cssload-square { transform: scale(1) rotate(-45deg); animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
+    .cssload-shadow { top: 97px; left: 50%; position: relative; display: block; width: 1em; height: 0.24em; background-color: rgb(215, 215, 215); border-radius: 50%; transform: translateX(-50%); animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal; }
+    @keyframes cssload-square { 50% { border-radius: 100%; transform: scale(0.5) rotate(-45deg); } 100% { transform: scale(1) rotate(-45deg); } }
+    @keyframes cssload-heart { 50% { transform: rotate(360deg); } 100% { transform: rotate(720deg); } }
+    @keyframes cssload-heartL { 60% { transform: scale(0.4) translate(-28px, -27px); } }
+    @keyframes cssload-heartR { 40% { transform: scale(0.4) translate(28px, -27px); } }
+    @keyframes cssload-shadow { 50% { transform: translateX(-50%) scale(0.5); } }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Link Generator 🐻</h2>
-        
-        <label>Main Question (Sawal):</label>
-        <input type="text" id="questionText" placeholder="e.g. या तुम मेरे दोस्त बनोगे?" autocomplete="off">
-        
-        <label>Success Message (Jab wo Yes dabaye):</label>
-        <textarea id="successText" placeholder="e.g. Hehehe...बन गए ना मेरे दोस्त 😁😂😍!"></textarea>
-        
-        <button onclick="generateLink()">Generate Link 🔗</button>
+  <!-- ================= UI 1: LINK GENERATOR ================= -->
+  <div id="generator-ui">
+    <h2>Prank Link Generator 🐻</h2>
+    
+    <label>1ST MSG (Sawal / Question):</label>
+    <input type="text" id="qInput" value="या तुम मेरे दोस्त बनोगे?" autocomplete="off">
+    
+    <label>2ND MSG (Success / Manne ke baad):</label>
+    <input type="text" id="sInput" value="BN GYE NA MERE DOST" autocomplete="off">
+    
+    <button onclick="generateLink()">Generate Link 🔗</button>
 
-        <div id="resultBox" class="result-box">
-            <div class="result-title">Ye link copy karein aur WhatsApp par bhejein:</div>
-            <p id="generatedUrl" style="margin-bottom: 15px; font-weight: 500;"></p>
-            <button onclick="copyLink()" style="padding: 10px; font-size: 0.9rem;">Copy Link 📋</button>
-        </div>
+    <div id="resultBox" class="result-box">
+        <p style="font-weight: 600; color: #ef6e7e; margin-bottom: 5px;">Copy and Send to Friend:</p>
+        <p id="generatedUrl" style="margin-bottom: 15px; font-weight: 500;"></p>
+        <button onclick="copyLink()" style="padding: 10px; font-size: 0.9rem;">Copy Link 📋</button>
     </div>
+  </div>
 
-    <script>
-        function generateLink() {
-            const q = document.getElementById('questionText').value.trim();
-            const s = document.getElementById('successText').value.trim();
+  <!-- ================= UI 2: PRANK SCREEN ================= -->
+  <div id="prank-ui">
+    <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
+    <h2 class="question" id="dynamic-question">या तुम मेरे दोस्त बनोगे?</h2>
+    
+    <div class="button-container">
+      <button class="btn yes-btn" id="yesBtn">Yes</button>
+      <button class="btn no-btn" id="noBtn">No</button>
+    </div>
+  </div>
+  
+  <!-- ================= UI 3: SUCCESS SCREEN ================= -->
+  <div id="success-ui">
+    <img class="local-gif" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
+    <h2 class="question" id="dynamic-success">BN GYE NA MERE DOST</h2>
+  </div>
+
+  <!-- ================= UI 4: LOADER ================= -->
+  <div id="loader-ui">
+    <div class="cssload-heart">
+      <span class="cssload-heartL"></span>
+      <span class="cssload-heartR"></span>
+      <span class="cssload-square"></span>
+    </div>
+    <div class="cssload-shadow"></div>
+  </div>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    // 1. CHECK URL FOR DATA
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataParam = urlParams.get('d');
+        
+        // Agar URL me Data hai -> Friend ne open kiya hai
+        if (dataParam) {
+            // Form ko hide karo aur Prank show karo
+            document.getElementById('generator-ui').style.display = 'none';
+            document.getElementById('prank-ui').style.display = 'flex';
             
-            if(!q || !s) {
-                alert("Please enter both Question and Success Message!");
-                return;
+            try {
+                // Link me chhupe hue data ko bahar nikalo
+                const decoded = JSON.parse(decodeURIComponent(escape(atob(dataParam))));
+                
+                // HTML me text change karo
+                if(decoded.q) document.getElementById('dynamic-question').innerText = decoded.q;
+                if(decoded.s) document.getElementById('dynamic-success').innerText = decoded.s;
+            } catch(e) {
+                console.log("Link error:", e);
             }
-
-            // Data ko encode karna
-            const payload = { q: q, s: s };
-            const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-            
-            // Current URL se index.html hatakar surprise.html lagana
-            let baseUrl = window.location.href.split('?')[0];
-            baseUrl = baseUrl.replace('index.html', '');
-            if(!baseUrl.endsWith('/')) baseUrl += '/';
-            
-            const finalLink = `${baseUrl}surprise.html?d=${encodedData}`;
-            
-            document.getElementById('generatedUrl').innerText = finalLink;
-            document.getElementById('resultBox').style.display = 'block';
         }
+    };
 
-        function copyLink() {
-            const linkText = document.getElementById('generatedUrl').innerText;
-            navigator.clipboard.writeText(linkText).then(() => {
-                alert("Link Copied! Now send it to your friend.");
-            });
-        }
-    </script>
+    // 2. LINK GENERATOR FUNCTION
+    function generateLink() {
+        const q = document.getElementById('qInput').value.trim();
+        const s = document.getElementById('sInput').value.trim();
+        
+        if(!q || !s) { alert("Dono messages bharna zaroori hai!"); return; }
+
+        const payload = { q: q, s: s };
+        const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+        
+        // Current website ka URL uthao (binna purane data ke)
+        let baseUrl = window.location.href.split('?')[0];
+        const finalLink = `${baseUrl}?d=${encodedData}`;
+        
+        document.getElementById('generatedUrl').innerText = finalLink;
+        document.getElementById('resultBox').style.display = 'block';
+    }
+
+    function copyLink() {
+        const linkText = document.getElementById('generatedUrl').innerText;
+        navigator.clipboard.writeText(linkText).then(() => {
+            alert("Link Copied! Ab ise WhatsApp par bhej dein.");
+        });
+    }
+
+    // 3. PRANK LOGIC (No Button Bhagana)
+    const noBtn = document.getElementById("noBtn");
+    
+    const moveNoBtn = () => {
+      noBtn.style.position = 'fixed';
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20; 
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+      const newX = Math.max(20, Math.floor(Math.random() * maxX));
+      const newY = Math.max(20, Math.floor(Math.random() * maxY));
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    };
+
+    noBtn.addEventListener("mouseover", moveNoBtn);
+    noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoBtn(); });
+
+    // Yes Button Click karne par Loader aur Success
+    document.getElementById("yesBtn").addEventListener("click", () => {
+      document.getElementById("prank-ui").style.display = "none";
+      document.getElementById("loader-ui").style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById("loader-ui").style.display = "none";
+        document.getElementById("success-ui").style.display = "flex"; 
+      }, 3000);
+    });
+  </script>
+
 </body>
 </html>
