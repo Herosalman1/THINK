@@ -196,24 +196,6 @@
             letter-spacing: -0.5px;
         }
 
-        .surprise-mode .custom-message-box {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #e0556a;
-            margin-bottom: 25px;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 15px 30px;
-            border-radius: 30px;
-            backdrop-filter: blur(5px);
-            max-width: 450px;
-            line-height: 1.6;
-        }
-
-        .surprise-mode .custom-message-box .name-highlight {
-            color: #2d1b1f;
-            font-weight: 700;
-        }
-
         .surprise-mode .button-container {
             display: flex;
             gap: 20px;
@@ -372,10 +354,6 @@
             .surprise-mode .question {
                 font-size: 2.2rem;
             }
-            .surprise-mode .custom-message-box {
-                font-size: 1.1rem;
-                padding: 12px 20px;
-            }
             .result-container h2 {
                 font-size: 2.2rem;
             }
@@ -416,10 +394,6 @@
         <div class="question-container js-question-container">
             <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
 
-            <div class="custom-message-box" id="customMsgDisplay">
-                ❤️ <span class="name-highlight" id="friendNameDisplay">तुम</span> बहुत खास हो! 💖
-            </div>
-
             <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
 
             <div class="button-container">
@@ -431,7 +405,8 @@
         <!-- Success UI -->
         <div class="result-container js-result-container">
             <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
-            <h2>Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
+            <!-- YAHAN CUSTOM MESSAGE AAYEGA -->
+            <h2 id="successMessage">Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
         </div>
 
         <!-- Loading Animation -->
@@ -463,15 +438,13 @@
                     const jsonString = decodeURIComponent(escape(atob(encodedData)));
                     const data = JSON.parse(jsonString);
 
-                    // Name और Message Set करो
-                    const nameDisplay = document.getElementById('friendNameDisplay');
-                    const msgDisplay = document.getElementById('customMsgDisplay');
-
-                    nameDisplay.textContent = data.n || 'तुम';
-                    msgDisplay.innerHTML = `💝 ${data.m || 'तुम बहुत खास हो!'} 💝`;
+                    // CUSTOM MESSAGE को SUCCESS SCREEN पर सेट करो
+                    const successMsg = document.getElementById('successMessage');
+                    if (data.m) {
+                        successMsg.textContent = data.m;
+                    }
 
                 } catch (e) {
-                    // अगर डिकोड करने में गड़बड़ी हो, तो डिफ़ॉल्ट MSG दिखाओ
                     console.log("Error decoding data:", e);
                 }
 
