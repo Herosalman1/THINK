@@ -1,321 +1,575 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-  <title>Do you love me?</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+    <title>✨ सरप्राइज़ लिंक जनरेटर</title>
 
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #fae6e9;
-      font-family: "Quicksand", sans-serif;
-      overflow: hidden;
-    }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fae6e9;
+            font-family: "Quicksand", sans-serif;
+            overflow: hidden;
+        }
 
-    .question-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      z-index: 10;
-    }
+        /* ----- GENERATOR MODE (जब URL में ?d= न हो) ----- */
+        .generator-mode {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 245, 247, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 40px 35px;
+            border-radius: 60px;
+            box-shadow: 0 25px 50px rgba(190, 90, 100, 0.2);
+            max-width: 500px;
+            width: 92%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
 
-    .local-gif {
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      pointer-events: none;
-      background-color: transparent;
-    }
+        .generator-mode .heart-icon {
+            font-size: 3rem;
+            animation: pulse 1.5s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
 
-    .question {
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 25px;
-      letter-spacing: -0.5px;
-    }
+        @keyframes pulse {
+            0%,
+            100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
 
-    .custom-message-box {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #e0556a;
-      margin-bottom: 25px;
-      background: rgba(255, 255, 255, 0.5);
-      padding: 15px 30px;
-      border-radius: 30px;
-      backdrop-filter: blur(5px);
-      max-width: 450px;
-      line-height: 1.6;
-    }
+        .generator-mode h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2d1b1f;
+            margin-bottom: 8px;
+        }
 
-    .custom-message-box .name-highlight {
-      color: #2d1b1f;
-      font-weight: 700;
-    }
+        .generator-mode .sub-text {
+            color: #7a5a62;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
 
-    .button-container {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
-    }
+        .generator-mode label {
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-weight: 600;
+            color: #2d1b1f;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
 
-    .btn {
-      border: none;
-      border-radius: 50px;
-      padding: 10px 32px;
-      font-family: "Quicksand", sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      background-color: #ef6e7e;
-      color: white;
-      box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35);
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
+        .generator-mode input,
+        .generator-mode textarea {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            border: 2px solid rgba(239, 110, 126, 0.25);
+            background: rgba(255, 255, 255, 0.5);
+            color: #2d1b1f;
+            font-size: 1rem;
+            font-family: "Quicksand", sans-serif;
+            transition: border 0.3s;
+        }
 
-    .btn:hover {
-      background-color: #df5869;
-      transform: scale(1.05);
-    }
+        .generator-mode input:focus,
+        .generator-mode textarea:focus {
+            outline: none;
+            border-color: #ef6e7e;
+        }
 
-    .no-btn {
-      transition: top 0.2s ease, left 0.2s ease;
-    }
+        .generator-mode textarea {
+            resize: vertical;
+            height: 100px;
+        }
 
-    .result-container {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      z-index: 10;
-    }
+        .btn-generate {
+            width: 100%;
+            background: #ef6e7e;
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            font-family: "Quicksand", sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0px 8px 25px rgba(239, 110, 126, 0.35);
+        }
 
-    .gif-result {
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
+        .btn-generate:hover {
+            background: #df5869;
+            transform: translateY(-3px);
+            box-shadow: 0px 12px 35px rgba(239, 110, 126, 0.45);
+        }
 
-    .result-container h2 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #111;
-    }
+        .result-box {
+            display: none;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 20px;
+            width: 100%;
+            border: 2px dashed #ef6e7e;
+        }
 
-    .cssload-main {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-    }
+        .result-box .result-title {
+            font-weight: 600;
+            color: #2d1b1f;
+            margin-bottom: 10px;
+        }
 
-    .cssload-main * {
-      font-size: 62px;
-    }
+        .result-box .generated-link {
+            background: rgba(0, 0, 0, 0.04);
+            padding: 12px;
+            border-radius: 12px;
+            word-break: break-all;
+            font-size: 0.8rem;
+            color: #2d1b1f;
+            margin-bottom: 15px;
+            border: 1px solid rgba(239, 110, 126, 0.15);
+        }
 
-    .cssload-heart {
-      animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-      top: 50%;
-      left: 50%;
-      position: absolute;
-    }
+        .btn-copy {
+            width: 100%;
+            background: #b0b8c0;
+            border: none;
+            padding: 12px;
+            border-radius: 50px;
+            color: #1e1e1e;
+            font-weight: 600;
+            font-family: "Quicksand", sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-    .cssload-heartL,
-    .cssload-heartR,
-    .cssload-square {
-      width: 1em;
-      height: 1em;
-      background-color: #ff0000;
-      border: 1px solid #ff0000;
-      position: absolute;
-      display: block;
-    }
+        .btn-copy:hover {
+            background: #a0aab4;
+            transform: scale(1.02);
+        }
 
-    .cssload-heartL {
-      border-radius: 100%;
-      transform: translate(-28px, -27px);
-      animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
+        /* ----- SURPRISE MODE (जब URL में ?d= हो) ----- */
+        .surprise-mode {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+        }
 
-    .cssload-heartR {
-      border-radius: 100%;
-      transform: translate(28px, -27px);
-      animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
+        .surprise-mode .local-gif {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            pointer-events: none;
+            background-color: transparent;
+        }
 
-    .cssload-square {
-      transform: scale(1) rotate(-45deg);
-      animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
+        .surprise-mode .question {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 25px;
+            letter-spacing: -0.5px;
+        }
 
-    .cssload-shadow {
-      top: 97px;
-      left: 50%;
-      position: relative;
-      display: block;
-      width: 1em;
-      height: 0.24em;
-      background-color: rgb(215, 215, 215);
-      border-radius: 50%;
-      transform: translateX(-50%);
-      animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
+        .surprise-mode .custom-message-box {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e0556a;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px 30px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            max-width: 450px;
+            line-height: 1.6;
+        }
 
-    @keyframes cssload-square {
-      50% {
-        border-radius: 100%;
-        transform: scale(0.5) rotate(-45deg);
-      }
-      100% {
-        transform: scale(1) rotate(-45deg);
-      }
-    }
-    @keyframes cssload-heart {
-      50% {
-        transform: rotate(360deg);
-      }
-      100% {
-        transform: rotate(720deg);
-      }
-    }
-    @keyframes cssload-heartL {
-      60% {
-        transform: scale(0.4) translate(-28px, -27px);
-      }
-    }
-    @keyframes cssload-heartR {
-      40% {
-        transform: scale(0.4) translate(28px, -27px);
-      }
-    }
-    @keyframes cssload-shadow {
-      50% {
-        transform: translateX(-50%) scale(0.5);
-      }
-    }
-  </style>
+        .surprise-mode .custom-message-box .name-highlight {
+            color: #2d1b1f;
+            font-weight: 700;
+        }
+
+        .surprise-mode .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .surprise-mode .btn {
+            border: none;
+            border-radius: 50px;
+            padding: 10px 32px;
+            font-family: "Quicksand", sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: #ef6e7e;
+            color: white;
+            box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .surprise-mode .btn:hover {
+            background-color: #df5869;
+            transform: scale(1.05);
+        }
+
+        .surprise-mode .no-btn {
+            transition: top 0.2s ease, left 0.2s ease;
+        }
+
+        .result-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .result-container .gif-result {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .result-container h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #111;
+        }
+
+        /* Heart Loader */
+        .cssload-main {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+
+        .cssload-main * {
+            font-size: 62px;
+        }
+
+        .cssload-heart {
+            animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+        }
+
+        .cssload-heartL,
+        .cssload-heartR,
+        .cssload-square {
+            width: 1em;
+            height: 1em;
+            background-color: #ff0000;
+            border: 1px solid #ff0000;
+            position: absolute;
+            display: block;
+        }
+
+        .cssload-heartL {
+            border-radius: 100%;
+            transform: translate(-28px, -27px);
+            animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+        }
+
+        .cssload-heartR {
+            border-radius: 100%;
+            transform: translate(28px, -27px);
+            animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+        }
+
+        .cssload-square {
+            transform: scale(1) rotate(-45deg);
+            animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+        }
+
+        .cssload-shadow {
+            top: 97px;
+            left: 50%;
+            position: relative;
+            display: block;
+            width: 1em;
+            height: 0.24em;
+            background-color: rgb(215, 215, 215);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+        }
+
+        @keyframes cssload-square {
+            50% {
+                border-radius: 100%;
+                transform: scale(0.5) rotate(-45deg);
+            }
+            100% {
+                transform: scale(1) rotate(-45deg);
+            }
+        }
+        @keyframes cssload-heart {
+            50% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transform: rotate(720deg);
+            }
+        }
+        @keyframes cssload-heartL {
+            60% {
+                transform: scale(0.4) translate(-28px, -27px);
+            }
+        }
+        @keyframes cssload-heartR {
+            40% {
+                transform: scale(0.4) translate(28px, -27px);
+            }
+        }
+        @keyframes cssload-shadow {
+            50% {
+                transform: translateX(-50%) scale(0.5);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .generator-mode {
+                padding: 30px 20px;
+            }
+            .generator-mode h1 {
+                font-size: 1.8rem;
+            }
+            .surprise-mode .question {
+                font-size: 2.2rem;
+            }
+            .surprise-mode .custom-message-box {
+                font-size: 1.1rem;
+                padding: 12px 20px;
+            }
+            .result-container h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Main Question UI -->
-  <div class="question-container js-question-container">
-    <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
+    <!-- ============================================================ -->
+    <!-- 1. GENERATOR MODE (जब URL में ?d= न हो) -->
+    <!-- ============================================================ -->
+    <div class="generator-mode" id="generatorMode">
+        <div class="heart-icon">❤️</div>
+        <h1>✨ सरप्राइज़ लिंक बनाओ ✨</h1>
+        <p class="sub-text">अपने दोस्त के लिए खास संदेश के साथ लिंक बनाओ</p>
 
-    <!-- यहाँ Custom MSG दिखेगा -->
-    <div class="custom-message-box" id="customMsgDisplay">
-      ❤️ <span class="name-highlight" id="friendNameDisplay">तुम</span> बहुत खास हो! 💖
+        <label>👤 दोस्त का नाम:</label>
+        <input type="text" id="friendName" placeholder="जैसे: Rahul, Priya..." autocomplete="off">
+
+        <label>💝 अपना संदेश लिखो:</label>
+        <textarea id="customMessage" placeholder="यहाँ अपना प्यार भरा संदेश लिखो..."></textarea>
+
+        <button class="btn-generate" onclick="generateLink()">🔗 लिंक बनाओ</button>
+
+        <div class="result-box" id="resultBox">
+            <div class="result-title">📋 अपने दोस्त को ये लिंक भेजो:</div>
+            <div class="generated-link" id="generatedUrl"></div>
+            <button class="btn-copy" onclick="copyLink()">📋 कॉपी करो</button>
+        </div>
     </div>
 
-    <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
+    <!-- ============================================================ -->
+    <!-- 2. SURPRISE MODE (जब URL में ?d= हो) -->
+    <!-- ============================================================ -->
+    <div class="surprise-mode" id="surpriseMode">
 
-    <div class="button-container">
-      <button class="btn yes-btn js-yes-btn">Yes</button>
-      <button class="btn no-btn js-no-btn">No</button>
+        <!-- Main Question UI -->
+        <div class="question-container js-question-container">
+            <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
+
+            <div class="custom-message-box" id="customMsgDisplay">
+                ❤️ <span class="name-highlight" id="friendNameDisplay">तुम</span> बहुत खास हो! 💖
+            </div>
+
+            <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
+
+            <div class="button-container">
+                <button class="btn yes-btn js-yes-btn">Yes</button>
+                <button class="btn no-btn js-no-btn">No</button>
+            </div>
+        </div>
+
+        <!-- Success UI -->
+        <div class="result-container js-result-container">
+            <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
+            <h2>Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
+        </div>
+
+        <!-- Loading Animation -->
+        <div class="cssload-main js-cssload-main">
+            <div class="cssload-heart">
+                <span class="cssload-heartL"></span>
+                <span class="cssload-heartR"></span>
+                <span class="cssload-square"></span>
+            </div>
+            <div class="cssload-shadow"></div>
+        </div>
+
     </div>
-  </div>
 
-  <!-- Success UI -->
-  <div class="result-container js-result-container">
-    <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
-    <h2>Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
-  </div>
+    <script>
+        // ================================================================
+        // 1. GENERATOR MODE LOGIC
+        // ================================================================
+        function generateLink() {
+            const name = document.getElementById('friendName').value.trim();
+            const msg = document.getElementById('customMessage').value.trim();
 
-  <!-- Loading Animation -->
-  <div class="cssload-main js-cssload-main">
-    <div class="cssload-heart">
-      <span class="cssload-heartL"></span>
-      <span class="cssload-heartR"></span>
-      <span class="cssload-square"></span>
-    </div>
-    <div class="cssload-shadow"></div>
-  </div>
+            if (!name || !msg) {
+                alert("⚠️ कृपया नाम और संदेश दोनों भरें!");
+                return;
+            }
 
-  <script>
-    // ===== URL से Data पढ़ो =====
-    function getDataFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const encodedData = urlParams.get('d');
-        
-        if (!encodedData) return null;
-        
-        try {
-            const jsonString = decodeURIComponent(escape(atob(encodedData)));
-            return JSON.parse(jsonString);
-        } catch (e) {
-            return null;
+            // Data को encode करो
+            const payload = { n: name, m: msg };
+            const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+
+            // Current URL से surprise.html को हटाओ (अगर है तो)
+            let baseUrl = window.location.href.split('?')[0];
+            // अगर URL में surprise.html है तो उसे हटाओ
+            if (baseUrl.includes('surprise.html')) {
+                baseUrl = baseUrl.replace('surprise.html', '');
+            }
+            if (!baseUrl.endsWith('/')) baseUrl += '/';
+
+            const finalLink = `${baseUrl}surprise.html?d=${encodedData}`;
+
+            document.getElementById('generatedUrl').innerText = finalLink;
+            document.getElementById('resultBox').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
-    }
 
-    // ===== MSG Show करो =====
-    const data = getDataFromURL();
-    if (data) {
-        const nameDisplay = document.getElementById('friendNameDisplay');
-        const msgDisplay = document.getElementById('customMsgDisplay');
-        
-        // Name set करो
-        nameDisplay.textContent = data.n || 'तुम';
-        
-        // पूरा MSG set करो
-        msgDisplay.innerHTML = `💝 ${data.m || 'तुम बहुत खास हो!'} 💝`;
-    }
+        function copyLink() {
+            const linkText = document.getElementById('generatedUrl').innerText;
+            navigator.clipboard.writeText(linkText).then(() => {
+                alert("✅ लिंक कॉपी हो गया! अब WhatsApp पर भेजो 🎉");
+            }).catch(() => {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = linkText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert("✅ लिंक कॉपी हो गया!");
+            });
+        }
 
-    // ===== Game Logic =====
-    const questionContainer = document.querySelector(".js-question-container");
-    const resultContainer = document.querySelector(".js-result-container");
-    const heartLoader = document.querySelector(".js-cssload-main");
-    const yesBtn = document.querySelector(".js-yes-btn");
-    const noBtn = document.querySelector(".js-no-btn");
+        // ================================================================
+        // 2. SURPRISE MODE LOGIC (URL से Data पढ़ो)
+        // ================================================================
+        function getDataFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const encodedData = urlParams.get('d');
 
-    const moveNoBtn = () => {
-      noBtn.style.position = 'fixed';
+            if (!encodedData) return null;
 
-      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            try {
+                const jsonString = decodeURIComponent(escape(atob(encodedData)));
+                return JSON.parse(jsonString);
+            } catch (e) {
+                return null;
+            }
+        }
 
-      const newX = Math.max(20, Math.floor(Math.random() * maxX));
-      const newY = Math.max(20, Math.floor(Math.random() * maxY));
+        // चेक करो कि URL में ?d= है या नहीं
+        const data = getDataFromURL();
 
-      noBtn.style.left = `${newX}px`;
-      noBtn.style.top = `${newY}px`;
-    };
+        if (data) {
+            // SURPRISE MODE ON
+            document.getElementById('generatorMode').style.display = 'none';
+            document.getElementById('surpriseMode').style.display = 'flex';
 
-    noBtn.addEventListener("mouseover", moveNoBtn);
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNoBtn();
-    });
+            // Name और Message Set करो
+            const nameDisplay = document.getElementById('friendNameDisplay');
+            const msgDisplay = document.getElementById('customMsgDisplay');
 
-    yesBtn.addEventListener("click", () => {
-      questionContainer.style.display = "none";
-      heartLoader.style.display = "block";
+            nameDisplay.textContent = data.n || 'तुम';
+            msgDisplay.innerHTML = `💝 ${data.m || 'तुम बहुत खास हो!'} 💝`;
 
-      setTimeout(() => {
-        heartLoader.style.display = "none";
-        resultContainer.style.display = "flex";
-      }, 3000);
-    });
-  </script>
+            // ===== GAME LOGIC =====
+            const questionContainer = document.querySelector(".js-question-container");
+            const resultContainer = document.querySelector(".js-result-container");
+            const heartLoader = document.querySelector(".js-cssload-main");
+            const yesBtn = document.querySelector(".js-yes-btn");
+            const noBtn = document.querySelector(".js-no-btn");
+
+            const moveNoBtn = () => {
+                noBtn.style.position = 'fixed';
+
+                const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+                const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+                const newX = Math.max(20, Math.floor(Math.random() * maxX));
+                const newY = Math.max(20, Math.floor(Math.random() * maxY));
+
+                noBtn.style.left = `${newX}px`;
+                noBtn.style.top = `${newY}px`;
+            };
+
+            noBtn.addEventListener("mouseover", moveNoBtn);
+            noBtn.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                moveNoBtn();
+            });
+
+            yesBtn.addEventListener("click", () => {
+                questionContainer.style.display = "none";
+                heartLoader.style.display = "block";
+
+                setTimeout(() => {
+                    heartLoader.style.display = "none";
+                    resultContainer.style.display = "flex";
+                }, 3000);
+            });
+
+        } else {
+            // GENERATOR MODE ON - पहले से ही display:flex है
+            console.log("Generator Mode Active");
+        }
+    </script>
 
 </body>
 </html>
