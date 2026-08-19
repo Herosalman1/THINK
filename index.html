@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-  <title>Do you love me?</title>
+  <title>❤️ तुम्हारे लिए...</title>
 
   <style>
     * {
@@ -47,15 +47,24 @@
       font-size: 2.8rem;
       font-weight: 700;
       color: #111;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
       letter-spacing: -0.5px;
     }
 
-    .button-container {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
+    .sub-text {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #444;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.4);
+      padding: 15px 30px;
+      border-radius: 30px;
+      backdrop-filter: blur(5px);
+    }
+
+    .sub-text .highlight {
+      color: #e0556a;
+      font-weight: 700;
     }
 
     .btn {
@@ -70,6 +79,8 @@
       color: white;
       box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35);
       transition: transform 0.2s ease, background-color 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
     }
 
     .btn:hover {
@@ -77,211 +88,43 @@
       transform: scale(1.05);
     }
 
-    .no-btn {
-      transition: top 0.2s ease, left 0.2s ease;
+    .heart-icon {
+      font-size: 3.5rem;
+      animation: pulse 1.5s ease-in-out infinite;
+      margin-bottom: 10px;
     }
 
-    .result-container {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      z-index: 10;
-    }
-
-    .gif-result {
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-
-    .result-container h2 {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #111;
-    }
-
-    .cssload-main {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-    }
-
-    .cssload-main * {
-      font-size: 62px;
-    }
-
-    .cssload-heart {
-      animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-      top: 50%;
-      left: 50%;
-      position: absolute;
-    }
-
-    .cssload-heartL,
-    .cssload-heartR,
-    .cssload-square {
-      width: 1em;
-      height: 1em;
-      background-color: #ff0000;
-      border: 1px solid #ff0000;
-      position: absolute;
-      display: block;
-    }
-
-    .cssload-heartL {
-      border-radius: 100%;
-      transform: translate(-28px, -27px);
-      animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
-
-    .cssload-heartR {
-      border-radius: 100%;
-      transform: translate(28px, -27px);
-      animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
-
-    .cssload-square {
-      transform: scale(1) rotate(-45deg);
-      animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
-
-    .cssload-shadow {
-      top: 97px;
-      left: 50%;
-      position: relative;
-      display: block;
-      width: 1em;
-      height: 0.24em;
-      background-color: rgb(215, 215, 215);
-      border-radius: 50%;
-      transform: translateX(-50%);
-      animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-    }
-
-    @keyframes cssload-square {
-      50% {
-        border-radius: 100%;
-        transform: scale(0.5) rotate(-45deg);
-      }
+    @keyframes pulse {
+      0%,
       100% {
-        transform: scale(1) rotate(-45deg);
+        transform: scale(1);
       }
-    }
-    @keyframes cssload-heart {
       50% {
-        transform: rotate(360deg);
+        transform: scale(1.2);
       }
-      100% {
-        transform: rotate(720deg);
-      }
-    }
-    @keyframes cssload-heartL {
-      60% {
-        transform: scale(0.4) translate(-28px, -27px);
-      }
-    }
-    @keyframes cssload-heartR {
-      40% {
-        transform: scale(0.4) translate(28px, -27px);
-      }
-    }
-    @keyframes cssload-shadow {
-      50% {
-        transform: translateX(-50%) scale(0.5);
-      }
-    }
-
-    .back-link {
-      margin-top: 2rem;
-      font-size: 0.9rem;
-      color: #7a5a62;
-      opacity: 0.7;
-      text-decoration: none;
-      border-bottom: 1px dashed #c0a0a8;
-      transition: opacity 0.2s;
-      display: inline-block;
-    }
-    .back-link:hover {
-      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-  <!-- Main Question UI -->
-  <div class="question-container js-question-container">
+  <div class="question-container">
+    <div class="heart-icon">❤️</div>
+
     <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
 
-    <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
+    <h2 class="question">✨ तुम्हारे लिए... ✨</h2>
 
-    <div class="button-container">
-      <button class="btn yes-btn js-yes-btn">Yes</button>
-      <button class="btn no-btn js-no-btn">No</button>
+    <!-- 👇 यहाँ अपना प्यारा सा संदेश लिखो -->
+    <div class="sub-text">
+      तुम मेरी ज़िंदगी की <span class="highlight">खास</span> वजह हो 🥰<br />
+      तुम्हारी मुस्कान मेरा दिन बना देती है 🌸<br />
+      बस यही कहना था...<br />
+      <span style="font-size:1.8rem;">💖 तुम बहुत खास हो 💖</span>
     </div>
 
-    <!-- वापस index.html पर जाने का लिंक -->
-    <a href="index.html" class="back-link" style="margin-top:25px;">⬅️ वापस मुख्य पेज पर</a>
+    <!-- 👇 यह बटन surprise.html खोलेगा -->
+    <a href="surprise.html" class="btn">🎁 सरप्राइज़ देखो 🎁</a>
   </div>
-
-  <!-- Success UI -->
-  <div class="result-container js-result-container">
-    <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
-    <h2>Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
-    <a href="index.html" class="back-link" style="margin-top:25px;">⬅️ वापस मुख्य पेज पर</a>
-  </div>
-
-  <!-- Loading Animation -->
-  <div class="cssload-main js-cssload-main">
-    <div class="cssload-heart">
-      <span class="cssload-heartL"></span>
-      <span class="cssload-heartR"></span>
-      <span class="cssload-square"></span>
-    </div>
-    <div class="cssload-shadow"></div>
-  </div>
-
-  <script>
-    const questionContainer = document.querySelector(".js-question-container");
-    const resultContainer = document.querySelector(".js-result-container");
-    const heartLoader = document.querySelector(".js-cssload-main");
-    const yesBtn = document.querySelector(".js-yes-btn");
-    const noBtn = document.querySelector(".js-no-btn");
-
-    const moveNoBtn = () => {
-      noBtn.style.position = 'fixed';
-
-      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-
-      const newX = Math.max(20, Math.floor(Math.random() * maxX));
-      const newY = Math.max(20, Math.floor(Math.random() * maxY));
-
-      noBtn.style.left = `${newX}px`;
-      noBtn.style.top = `${newY}px`;
-    };
-
-    noBtn.addEventListener("mouseover", moveNoBtn);
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNoBtn();
-    });
-
-    yesBtn.addEventListener("click", () => {
-      questionContainer.style.display = "none";
-      heartLoader.style.display = "block";
-
-      setTimeout(() => {
-        heartLoader.style.display = "none";
-        resultContainer.style.display = "flex";
-      }, 3000);
-    });
-  </script>
 
 </body>
 </html>
