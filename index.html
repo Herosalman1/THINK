@@ -1,201 +1,322 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️ सरप्राइज़ लिंक जनरेटर</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
-        body { 
-            background: #fae6e9; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            padding: 20px; 
-        }
-        .container { 
-            background: rgba(255, 245, 247, 0.8); 
-            backdrop-filter: blur(10px);
-            padding: 35px 30px; 
-            border-radius: 30px; 
-            width: 100%; 
-            max-width: 500px; 
-            box-shadow: 0 20px 50px rgba(190, 90, 100, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        h2 { 
-            text-align: center; 
-            color: #2d1b1f; 
-            margin-bottom: 25px; 
-            font-size: 2rem;
-        }
-        .heart-icon {
-            text-align: center;
-            font-size: 3rem;
-            animation: pulse 1.5s ease-in-out infinite;
-            display: block;
-            margin-bottom: 5px;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-weight: 600;
-            color: #2d1b1f; 
-        }
-        input, textarea { 
-            width: 100%; 
-            padding: 14px; 
-            margin-bottom: 20px; 
-            border-radius: 15px; 
-            border: 2px solid rgba(239, 110, 126, 0.3); 
-            background: rgba(255, 255, 255, 0.5); 
-            color: #2d1b1f; 
-            font-size: 1rem; 
-            font-family: 'Quicksand', sans-serif;
-            transition: border 0.3s;
-        }
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #ef6e7e;
-        }
-        textarea { resize: vertical; height: 120px; }
-        .btn-generate { 
-            width: 100%; 
-            background: #ef6e7e; 
-            border: none; 
-            padding: 16px; 
-            border-radius: 50px; 
-            color: white; 
-            font-weight: 700; 
-            font-size: 1.1rem;
-            cursor: pointer; 
-            transition: 0.3s; 
-            margin-bottom: 15px;
-            box-shadow: 0px 8px 25px rgba(239, 110, 126, 0.4);
-        }
-        .btn-generate:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0px 12px 35px rgba(239, 110, 126, 0.5);
-            background: #df5869;
-        }
-        .result-box { 
-            display: none; 
-            background: rgba(255, 255, 255, 0.5); 
-            padding: 20px; 
-            border-radius: 20px; 
-            margin-top: 15px; 
-            border: 2px dashed #ef6e7e;
-        }
-        .result-title { 
-            font-weight: 600; 
-            color: #2d1b1f; 
-            margin-bottom: 10px; 
-            font-size: 0.95rem;
-        }
-        .generated-link {
-            background: rgba(0,0,0,0.05);
-            padding: 12px;
-            border-radius: 12px;
-            word-break: break-all;
-            font-size: 0.8rem;
-            color: #2d1b1f;
-            margin-bottom: 15px;
-            border: 1px solid rgba(239, 110, 126, 0.2);
-        }
-        .btn-copy { 
-            width: 100%; 
-            background: #b0b8c0; 
-            border: none; 
-            padding: 12px; 
-            border-radius: 50px; 
-            color: #1e1e1e; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: 0.3s;
-        }
-        .btn-copy:hover { 
-            background: #a0aab4; 
-            transform: scale(1.02);
-        }
-        .sub-text {
-            color: #7a5a62;
-            text-align: center;
-            font-size: 0.85rem;
-            margin-top: 15px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <title>Do you love me?</title>
+
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #fae6e9;
+      font-family: "Quicksand", sans-serif;
+      overflow: hidden;
+    }
+
+    .question-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .local-gif {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      pointer-events: none;
+      background-color: transparent;
+    }
+
+    .question {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 25px;
+      letter-spacing: -0.5px;
+    }
+
+    .custom-message-box {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #e0556a;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 18px 30px;
+      border-radius: 30px;
+      backdrop-filter: blur(5px);
+      max-width: 450px;
+      line-height: 1.6;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .custom-message-box .name-highlight {
+      color: #2d1b1f;
+      font-weight: 700;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 50px;
+      padding: 10px 32px;
+      font-family: "Quicksand", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #ef6e7e;
+      color: white;
+      box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #df5869;
+      transform: scale(1.05);
+    }
+
+    .no-btn {
+      transition: top 0.2s ease, left 0.2s ease;
+    }
+
+    .result-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .gif-result {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .result-container h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .cssload-main {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+    }
+
+    .cssload-main * {
+      font-size: 62px;
+    }
+
+    .cssload-heart {
+      animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+    }
+
+    .cssload-heartL,
+    .cssload-heartR,
+    .cssload-square {
+      width: 1em;
+      height: 1em;
+      background-color: #ff0000;
+      border: 1px solid #ff0000;
+      position: absolute;
+      display: block;
+    }
+
+    .cssload-heartL {
+      border-radius: 100%;
+      transform: translate(-28px, -27px);
+      animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-heartR {
+      border-radius: 100%;
+      transform: translate(28px, -27px);
+      animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-square {
+      transform: scale(1) rotate(-45deg);
+      animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-shadow {
+      top: 97px;
+      left: 50%;
+      position: relative;
+      display: block;
+      width: 1em;
+      height: 0.24em;
+      background-color: rgb(215, 215, 215);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    @keyframes cssload-square {
+      50% {
+        border-radius: 100%;
+        transform: scale(0.5) rotate(-45deg);
+      }
+      100% {
+        transform: scale(1) rotate(-45deg);
+      }
+    }
+    @keyframes cssload-heart {
+      50% {
+        transform: rotate(360deg);
+      }
+      100% {
+        transform: rotate(720deg);
+      }
+    }
+    @keyframes cssload-heartL {
+      60% {
+        transform: scale(0.4) translate(-28px, -27px);
+      }
+    }
+    @keyframes cssload-heartR {
+      40% {
+        transform: scale(0.4) translate(28px, -27px);
+      }
+    }
+    @keyframes cssload-shadow {
+      50% {
+        transform: translateX(-50%) scale(0.5);
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <span class="heart-icon">❤️</span>
-        <h2>✨ सरप्राइज़ लिंक बनाओ ✨</h2>
-        
-        <label>👤 दोस्त का नाम:</label>
-        <input type="text" id="friendName" placeholder="जैसे: Rahul, Priya..." autocomplete="off">
-        
-        <label>💝 अपना संदेश लिखो:</label>
-        <textarea id="customMessage" placeholder="यहाँ अपना प्यार भरा संदेश लिखो..."></textarea>
-        
-        <button class="btn-generate" onclick="generateLink()">🔗 लिंक बनाओ</button>
+  <!-- Main Question UI -->
+  <div class="question-container js-question-container">
+    <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
 
-        <div id="resultBox" class="result-box">
-            <div class="result-title">📋 अपने दोस्त को ये लिंक भेजो:</div>
-            <div class="generated-link" id="generatedUrl"></div>
-            <button class="btn-copy" onclick="copyLink()">📋 कॉपी करो</button>
-        </div>
-        <div class="sub-text">💫 हर दोस्त के लिए अलग संदेश</div>
+    <!-- यहाँ Custom MSG दिखेगा -->
+    <div class="custom-message-box" id="customMsgDisplay">
+      ❤️ <span class="name-highlight" id="friendNameDisplay">तुम</span> बहुत खास हो! 💖
     </div>
 
-    <script>
-        function generateLink() {
-            const name = document.getElementById('friendName').value.trim();
-            const msg = document.getElementById('customMessage').value.trim();
-            
-            if(!name || !msg) {
-                alert("⚠️ कृपया नाम और संदेश दोनों भरें!");
-                return;
-            }
+    <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
 
-            // Data ko Base64 encode karna
-            const payload = { n: name, m: msg };
-            const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-            
-            // Current URL se index.html hatao
-            let baseUrl = window.location.href.split('?')[0];
-            baseUrl = baseUrl.replace('index.html', '');
-            if(!baseUrl.endsWith('/')) baseUrl += '/';
-            
-            const finalLink = `${baseUrl}surprise.html?d=${encodedData}`;
-            
-            document.getElementById('generatedUrl').innerText = finalLink;
-            document.getElementById('resultBox').style.display = 'block';
-            
-            // Scroll to result
-            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+    <div class="button-container">
+      <button class="btn yes-btn js-yes-btn">Yes</button>
+      <button class="btn no-btn js-no-btn">No</button>
+    </div>
+  </div>
 
-        function copyLink() {
-            const linkText = document.getElementById('generatedUrl').innerText;
-            navigator.clipboard.writeText(linkText).then(() => {
-                alert("✅ लिंक कॉपी हो गया! अब WhatsApp पर भेजो 🎉");
-            }).catch(() => {
-                // Fallback
-                const textArea = document.createElement('textarea');
-                textArea.value = linkText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert("✅ लिंक कॉपी हो गया!");
-            });
+  <!-- Success UI -->
+  <div class="result-container js-result-container">
+    <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
+    <h2>Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
+  </div>
+
+  <!-- Loading Animation -->
+  <div class="cssload-main js-cssload-main">
+    <div class="cssload-heart">
+      <span class="cssload-heartL"></span>
+      <span class="cssload-heartR"></span>
+      <span class="cssload-square"></span>
+    </div>
+    <div class="cssload-shadow"></div>
+  </div>
+
+  <script>
+    // ===== URL से Data पढ़ो =====
+    function getDataFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedData = urlParams.get('d');
+        
+        if (!encodedData) return null;
+        
+        try {
+            const jsonString = decodeURIComponent(escape(atob(encodedData)));
+            return JSON.parse(jsonString);
+        } catch (e) {
+            return null;
         }
-    </script>
+    }
+
+    // ===== MSG Show करो =====
+    const data = getDataFromURL();
+    if (data) {
+        const nameDisplay = document.getElementById('friendNameDisplay');
+        const msgDisplay = document.getElementById('customMsgDisplay');
+        
+        // Name set करो
+        nameDisplay.textContent = data.n || 'तुम';
+        
+        // पूरा MSG set करो
+        msgDisplay.innerHTML = `💝 ${data.m || 'तुम बहुत खास हो!'} 💝`;
+    }
+
+    // ===== Game Logic =====
+    const questionContainer = document.querySelector(".js-question-container");
+    const resultContainer = document.querySelector(".js-result-container");
+    const heartLoader = document.querySelector(".js-cssload-main");
+    const yesBtn = document.querySelector(".js-yes-btn");
+    const noBtn = document.querySelector(".js-no-btn");
+
+    const moveNoBtn = () => {
+      noBtn.style.position = 'fixed';
+
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+      const newX = Math.max(20, Math.floor(Math.random() * maxX));
+      const newY = Math.max(20, Math.floor(Math.random() * maxY));
+
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    };
+
+    noBtn.addEventListener("mouseover", moveNoBtn);
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoBtn();
+    });
+
+    yesBtn.addEventListener("click", () => {
+      questionContainer.style.display = "none";
+      heartLoader.style.display = "block";
+
+      setTimeout(() => {
+        heartLoader.style.display = "none";
+        resultContainer.style.display = "flex";
+      }, 3000);
+    });
+  </script>
+
 </body>
 </html>
