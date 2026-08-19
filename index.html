@@ -167,6 +167,30 @@
     @keyframes cssload-heartL { 60% { transform: scale(0.4) translate(-28px, -27px); } }
     @keyframes cssload-heartR { 40% { transform: scale(0.4) translate(28px, -27px); } }
     @keyframes cssload-shadow { 50% { transform: translateX(-50%) scale(0.5); } }
+
+    /* =========================================
+       3. CREATOR WATERMARK (Instagram Link)
+       ========================================= */
+    .creator-tag {
+        position: fixed;
+        bottom: 15px;
+        right: 20px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #ef6e7e;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.6);
+        padding: 8px 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(239, 110, 126, 0.15);
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+    .creator-tag:hover {
+        background: rgba(255, 255, 255, 0.95);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(239, 110, 126, 0.3);
+    }
   </style>
 </head>
 <body id="mainBody">
@@ -220,6 +244,11 @@
     </div>
     <div class="cssload-shadow"></div>
   </div>
+
+  <!-- ================= INSTAGRAM WATERMARK ================= -->
+  <a href="https://www.instagram.com/herosalman1_929/" target="_blank" class="creator-tag">
+      Made by :@Herosalman1
+  </a>
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
