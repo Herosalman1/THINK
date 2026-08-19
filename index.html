@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-  <title>Surprise For You!</title>
+  <title>Prank Link Generator</title>
 
   <style>
     * {
@@ -30,7 +30,7 @@
        1. PREMIUM GENERATOR UI (Hidden by Default)
        ========================================= */
     #generator-ui { 
-        display: none; /* YE AB BY DEFAULT CHHUPA RAHEGA */
+        display: none; 
         background: #ffffff; 
         padding: 40px 35px; 
         border-radius: 24px; 
@@ -201,7 +201,7 @@
     
     <div class="input-group">
         <label>1ST MSG ✍️</label>
-        <input type="text" id="qInput" value="या तुम मेरे दोस्त बनोगे?" autocomplete="off">
+        <input type="text" id="qInput" value="क्या तुम मेरे दोस्त बनोगे?" autocomplete="off">
     </div>
     
     <div class="input-group">
@@ -213,7 +213,7 @@
 
     <div id="resultBox" class="result-box">
         <p style="font-weight: 700; color: #ef6e7e; margin-bottom: 8px;">Copy and Send to Friend:</p>
-        <p id="generatedUrl" style="margin-bottom: 10px; font-weight: 600; color: #333;"></p>
+        <p id="generatedUrl" style="margin-bottom: 10px; font-weight: 600; color: #333; word-break: break-all;"></p>
         <button id="copyBtn" onclick="copyLink()">📋 Copy Link</button>
     </div>
   </div>
@@ -221,7 +221,7 @@
   <!-- ================= UI 2: ORIGINAL PRANK SCREEN ================= -->
   <div class="question-container js-question-container" id="prank-ui">
     <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
-    <h2 class="question" id="dynamic-question">या तुम मेरे दोस्त बनोगे?</h2>
+    <h2 class="question" id="dynamic-question">क्या तुम मेरे दोस्त बनोगे?</h2>
     
     <div class="button-container">
       <button class="btn yes-btn js-yes-btn">Yes</button>
@@ -252,15 +252,14 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // 1. FAST CHECK: Bina wait kiye instantly decide karo kya dikhana hai
+    // 1. FAST CHECK
     const urlParams = new URLSearchParams(window.location.search);
     const dataParam = urlParams.get('d');
     
     if (dataParam) {
-        // Dost ne link khola hai -> Seedha Prank dikhao (Form hidden hi rahega)
         document.getElementById('prank-ui').style.display = 'flex';
-        
         try {
+            // Data decoding with exact preservation
             const decoded = JSON.parse(decodeURIComponent(escape(atob(dataParam))));
             if(decoded.q) document.getElementById('dynamic-question').innerText = decoded.q;
             if(decoded.s) document.getElementById('dynamic-success').innerText = decoded.s;
@@ -268,11 +267,10 @@
             console.log("Link error:", e);
         }
     } else {
-        // Aapne khola hai (Koi Data nahi hai) -> Form dikhao
         document.getElementById('generator-ui').style.display = 'block';
     }
 
-    // 2. LINK GENERATOR FUNCTION
+    // 2. LINK GENERATOR (Fixed URL Encoding Issue)
     function generateLink() {
         const q = document.getElementById('qInput').value.trim();
         const s = document.getElementById('sInput').value.trim();
@@ -280,10 +278,13 @@
         if(!q || !s) { alert("Please enter both messages!"); return; }
 
         const payload = { q: q, s: s };
-        const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+        
+        // Base64 + encodeURIComponent to make link 100% URL-Safe for Hindi/Emojis
+        const base64Data = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+        const safeEncodedData = encodeURIComponent(base64Data);
         
         let baseUrl = window.location.href.split('?')[0];
-        const finalLink = `${baseUrl}?d=${encodedData}`;
+        const finalLink = `${baseUrl}?d=${safeEncodedData}`;
         
         document.getElementById('generatedUrl').innerText = finalLink;
         document.getElementById('resultBox').style.display = 'block';
