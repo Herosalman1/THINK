@@ -1,130 +1,201 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-  <title>❤️ तुम्हारे लिए...</title>
-
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #fae6e9;
-      font-family: "Quicksand", sans-serif;
-      overflow: hidden;
-    }
-
-    .question-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      z-index: 10;
-    }
-
-    .local-gif {
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      pointer-events: none;
-      background-color: transparent;
-    }
-
-    .question {
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 15px;
-      letter-spacing: -0.5px;
-    }
-
-    .sub-text {
-      font-size: 1.3rem;
-      font-weight: 500;
-      color: #444;
-      margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.4);
-      padding: 15px 30px;
-      border-radius: 30px;
-      backdrop-filter: blur(5px);
-    }
-
-    .sub-text .highlight {
-      color: #e0556a;
-      font-weight: 700;
-    }
-
-    .btn {
-      border: none;
-      border-radius: 50px;
-      padding: 10px 32px;
-      font-family: "Quicksand", sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      background-color: #ef6e7e;
-      color: white;
-      box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35);
-      transition: transform 0.2s ease, background-color 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      background-color: #df5869;
-      transform: scale(1.05);
-    }
-
-    .heart-icon {
-      font-size: 3.5rem;
-      animation: pulse 1.5s ease-in-out infinite;
-      margin-bottom: 10px;
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.2);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ सरप्राइज़ लिंक जनरेटर</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+        body { 
+            background: #fae6e9; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 20px; 
+        }
+        .container { 
+            background: rgba(255, 245, 247, 0.8); 
+            backdrop-filter: blur(10px);
+            padding: 35px 30px; 
+            border-radius: 30px; 
+            width: 100%; 
+            max-width: 500px; 
+            box-shadow: 0 20px 50px rgba(190, 90, 100, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        h2 { 
+            text-align: center; 
+            color: #2d1b1f; 
+            margin-bottom: 25px; 
+            font-size: 2rem;
+        }
+        .heart-icon {
+            text-align: center;
+            font-size: 3rem;
+            animation: pulse 1.5s ease-in-out infinite;
+            display: block;
+            margin-bottom: 5px;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600;
+            color: #2d1b1f; 
+        }
+        input, textarea { 
+            width: 100%; 
+            padding: 14px; 
+            margin-bottom: 20px; 
+            border-radius: 15px; 
+            border: 2px solid rgba(239, 110, 126, 0.3); 
+            background: rgba(255, 255, 255, 0.5); 
+            color: #2d1b1f; 
+            font-size: 1rem; 
+            font-family: 'Quicksand', sans-serif;
+            transition: border 0.3s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #ef6e7e;
+        }
+        textarea { resize: vertical; height: 120px; }
+        .btn-generate { 
+            width: 100%; 
+            background: #ef6e7e; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 50px; 
+            color: white; 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            cursor: pointer; 
+            transition: 0.3s; 
+            margin-bottom: 15px;
+            box-shadow: 0px 8px 25px rgba(239, 110, 126, 0.4);
+        }
+        .btn-generate:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0px 12px 35px rgba(239, 110, 126, 0.5);
+            background: #df5869;
+        }
+        .result-box { 
+            display: none; 
+            background: rgba(255, 255, 255, 0.5); 
+            padding: 20px; 
+            border-radius: 20px; 
+            margin-top: 15px; 
+            border: 2px dashed #ef6e7e;
+        }
+        .result-title { 
+            font-weight: 600; 
+            color: #2d1b1f; 
+            margin-bottom: 10px; 
+            font-size: 0.95rem;
+        }
+        .generated-link {
+            background: rgba(0,0,0,0.05);
+            padding: 12px;
+            border-radius: 12px;
+            word-break: break-all;
+            font-size: 0.8rem;
+            color: #2d1b1f;
+            margin-bottom: 15px;
+            border: 1px solid rgba(239, 110, 126, 0.2);
+        }
+        .btn-copy { 
+            width: 100%; 
+            background: #b0b8c0; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 50px; 
+            color: #1e1e1e; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: 0.3s;
+        }
+        .btn-copy:hover { 
+            background: #a0aab4; 
+            transform: scale(1.02);
+        }
+        .sub-text {
+            color: #7a5a62;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="question-container">
-    <div class="heart-icon">❤️</div>
+    <div class="container">
+        <span class="heart-icon">❤️</span>
+        <h2>✨ सरप्राइज़ लिंक बनाओ ✨</h2>
+        
+        <label>👤 दोस्त का नाम:</label>
+        <input type="text" id="friendName" placeholder="जैसे: Rahul, Priya..." autocomplete="off">
+        
+        <label>💝 अपना संदेश लिखो:</label>
+        <textarea id="customMessage" placeholder="यहाँ अपना प्यार भरा संदेश लिखो..."></textarea>
+        
+        <button class="btn-generate" onclick="generateLink()">🔗 लिंक बनाओ</button>
 
-    <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
-
-    <h2 class="question">✨ तुम्हारे लिए... ✨</h2>
-
-    <!-- 👇 यहाँ अपना प्यारा सा संदेश लिखो -->
-    <div class="sub-text">
-      तुम मेरी ज़िंदगी की <span class="highlight">खास</span> वजह हो 🥰<br />
-      तुम्हारी मुस्कान मेरा दिन बना देती है 🌸<br />
-      बस यही कहना था...<br />
-      <span style="font-size:1.8rem;">💖 तुम बहुत खास हो 💖</span>
+        <div id="resultBox" class="result-box">
+            <div class="result-title">📋 अपने दोस्त को ये लिंक भेजो:</div>
+            <div class="generated-link" id="generatedUrl"></div>
+            <button class="btn-copy" onclick="copyLink()">📋 कॉपी करो</button>
+        </div>
+        <div class="sub-text">💫 हर दोस्त के लिए अलग संदेश</div>
     </div>
 
-    <!-- 👇 यह बटन surprise.html खोलेगा -->
-    <a href="surprise.html" class="btn">🎁 सरप्राइज़ देखो 🎁</a>
-  </div>
+    <script>
+        function generateLink() {
+            const name = document.getElementById('friendName').value.trim();
+            const msg = document.getElementById('customMessage').value.trim();
+            
+            if(!name || !msg) {
+                alert("⚠️ कृपया नाम और संदेश दोनों भरें!");
+                return;
+            }
 
+            // Data ko Base64 encode karna
+            const payload = { n: name, m: msg };
+            const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+            
+            // Current URL se index.html hatao
+            let baseUrl = window.location.href.split('?')[0];
+            baseUrl = baseUrl.replace('index.html', '');
+            if(!baseUrl.endsWith('/')) baseUrl += '/';
+            
+            const finalLink = `${baseUrl}surprise.html?d=${encodedData}`;
+            
+            document.getElementById('generatedUrl').innerText = finalLink;
+            document.getElementById('resultBox').style.display = 'block';
+            
+            // Scroll to result
+            document.getElementById('resultBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function copyLink() {
+            const linkText = document.getElementById('generatedUrl').innerText;
+            navigator.clipboard.writeText(linkText).then(() => {
+                alert("✅ लिंक कॉपी हो गया! अब WhatsApp पर भेजो 🎉");
+            }).catch(() => {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = linkText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert("✅ लिंक कॉपी हो गया!");
+            });
+        }
+    </script>
 </body>
 </html>
