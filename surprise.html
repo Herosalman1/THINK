@@ -1,420 +1,286 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎉 सरप्राइज़! दोस्त बनोगे?</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <title>Do you love me?</title>
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #fce4ec 0%, #f8d7da 100%);
-            font-family: "Quicksand", sans-serif;
-            overflow: hidden;
-        }
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
 
-        .card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 1.5rem 2rem 2.5rem;
-            border-radius: 56px;
-            background: rgba(255, 245, 247, 0.55);
-            backdrop-filter: blur(4px);
-            box-shadow: 0 20px 40px rgba(190, 90, 100, 0.2);
-            max-width: 600px;
-            width: 92%;
-            position: relative;
-            z-index: 10;
-        }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #fae6e9;
+      font-family: "Quicksand", sans-serif;
+      overflow: hidden;
+    }
 
-        .friend-gif {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 40px;
-            margin-bottom: 1.25rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-            background: #ffeef0;
-            pointer-events: none;
-        }
+    .question-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
 
-        .question-headline {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #2d1b1f;
-            letter-spacing: -0.3px;
-            margin-bottom: 1.75rem;
-            line-height: 1.3;
-        }
+    .local-gif {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      pointer-events: none;
+      background-color: transparent;
+    }
 
-        .question-headline span {
-            background: #ffd9df;
-            padding: 0.1rem 0.6rem;
-            border-radius: 60px;
-            display: inline-block;
-        }
+    .question {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 25px;
+      letter-spacing: -0.5px;
+    }
 
-        .button-pair {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 1.25rem 1.5rem;
-            margin: 0.5rem 0 0.25rem;
-        }
+    .button-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .btn {
-            border: none;
-            border-radius: 120px;
-            padding: 0.85rem 2.8rem;
-            font-family: "Quicksand", sans-serif;
-            font-weight: 700;
-            font-size: 1.25rem;
-            letter-spacing: 0.3px;
-            cursor: pointer;
-            box-shadow: 0 8px 18px rgba(220, 100, 120, 0.25);
-            transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
-            min-width: 110px;
-        }
+    .btn {
+      border: none;
+      border-radius: 50px;
+      padding: 10px 32px;
+      font-family: "Quicksand", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #ef6e7e;
+      color: white;
+      box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
 
-        .btn-yes {
-            background: #ec6b7a;
-            color: white;
-            box-shadow: 0 8px 18px rgba(225, 80, 100, 0.35);
-        }
-        .btn-yes:hover {
-            background: #de5b6b;
-            transform: scale(1.04);
-            box-shadow: 0 10px 24px rgba(215, 70, 90, 0.4);
-        }
+    .btn:hover {
+      background-color: #df5869;
+      transform: scale(1.05);
+    }
 
-        .btn-no {
-            background: #b0b8c0;
-            color: #1e1e1e;
-            box-shadow: 0 8px 18px rgba(140, 140, 150, 0.25);
-            position: relative;
-            transition: left 0.18s ease, top 0.18s ease, background 0.2s, transform 0.15s;
-        }
-        .btn-no:hover {
-            background: #a0aab4;
-            transform: scale(1.02);
-        }
+    .no-btn {
+      transition: top 0.2s ease, left 0.2s ease;
+    }
 
-        .result-panel {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0.5rem 0.5rem 1rem;
-            width: 100%;
-        }
+    .result-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
 
-        .result-gif {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 40px;
-            margin-bottom: 1.25rem;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-            background: #ffeaed;
-        }
+    .gif-result {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
 
-        .result-title {
-            font-size: 2.6rem;
-            font-weight: 700;
-            color: #1e1417;
-            line-height: 1.2;
-            background: rgba(255, 225, 230, 0.5);
-            padding: 0.3rem 1.2rem;
-            border-radius: 100px;
-            backdrop-filter: blur(2px);
-        }
+    .result-container h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #111;
+    }
 
-        .result-title .emoji-big {
-            font-size: 2.9rem;
-            display: inline-block;
-        }
+    .cssload-main {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+    }
 
-        .loader-wrapper {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(250, 230, 235, 0.7);
-            backdrop-filter: blur(3px);
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
+    .cssload-main * {
+      font-size: 62px;
+    }
 
-        .cssload-main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 120px;
-            height: 120px;
-            position: relative;
-        }
+    .cssload-heart {
+      animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+    }
 
-        .cssload-main * {
-            font-size: 60px;
-        }
+    .cssload-heartL,
+    .cssload-heartR,
+    .cssload-square {
+      width: 1em;
+      height: 1em;
+      background-color: #ff0000;
+      border: 1px solid #ff0000;
+      position: absolute;
+      display: block;
+    }
 
-        .cssload-heart {
-            animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-            top: 50%;
-            left: 50%;
-            position: absolute;
-            transform: translate(-50%, -50%);
-        }
+    .cssload-heartL {
+      border-radius: 100%;
+      transform: translate(-28px, -27px);
+      animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
 
-        .cssload-heartL,
-        .cssload-heartR,
-        .cssload-square {
-            width: 1em;
-            height: 1em;
-            background-color: #f44360;
-            border: 1px solid #f44360;
-            position: absolute;
-            display: block;
-        }
+    .cssload-heartR {
+      border-radius: 100%;
+      transform: translate(28px, -27px);
+      animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
 
-        .cssload-heartL {
-            border-radius: 100%;
-            transform: translate(-28px, -27px);
-            animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-        }
+    .cssload-square {
+      transform: scale(1) rotate(-45deg);
+      animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
 
-        .cssload-heartR {
-            border-radius: 100%;
-            transform: translate(28px, -27px);
-            animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-        }
+    .cssload-shadow {
+      top: 97px;
+      left: 50%;
+      position: relative;
+      display: block;
+      width: 1em;
+      height: 0.24em;
+      background-color: rgb(215, 215, 215);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
 
-        .cssload-square {
-            transform: scale(1) rotate(-45deg);
-            animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-        }
+    @keyframes cssload-square {
+      50% {
+        border-radius: 100%;
+        transform: scale(0.5) rotate(-45deg);
+      }
+      100% {
+        transform: scale(1) rotate(-45deg);
+      }
+    }
+    @keyframes cssload-heart {
+      50% {
+        transform: rotate(360deg);
+      }
+      100% {
+        transform: rotate(720deg);
+      }
+    }
+    @keyframes cssload-heartL {
+      60% {
+        transform: scale(0.4) translate(-28px, -27px);
+      }
+    }
+    @keyframes cssload-heartR {
+      40% {
+        transform: scale(0.4) translate(28px, -27px);
+      }
+    }
+    @keyframes cssload-shadow {
+      50% {
+        transform: translateX(-50%) scale(0.5);
+      }
+    }
 
-        .cssload-shadow {
-            top: 97px;
-            left: 50%;
-            position: relative;
-            display: block;
-            width: 1em;
-            height: 0.24em;
-            background-color: rgba(180, 150, 155, 0.5);
-            border-radius: 50%;
-            transform: translateX(-50%);
-            animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
-        }
-
-        @keyframes cssload-square {
-            50% {
-                border-radius: 100%;
-                transform: scale(0.5) rotate(-45deg);
-            }
-            100% {
-                transform: scale(1) rotate(-45deg);
-            }
-        }
-        @keyframes cssload-heart {
-            50% {
-                transform: rotate(360deg);
-            }
-            100% {
-                transform: rotate(720deg);
-            }
-        }
-        @keyframes cssload-heartL {
-            60% {
-                transform: scale(0.4) translate(-28px, -27px);
-            }
-        }
-        @keyframes cssload-heartR {
-            40% {
-                transform: scale(0.4) translate(28px, -27px);
-            }
-        }
-        @keyframes cssload-shadow {
-            50% {
-                transform: translateX(-50%) scale(0.5);
-            }
-        }
-
-        .back-link {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #7a5a62;
-            opacity: 0.7;
-            text-decoration: none;
-            border-bottom: 1px dashed #c0a0a8;
-            transition: opacity 0.2s;
-        }
-        .back-link:hover {
-            opacity: 1;
-        }
-
-        @media (max-width: 500px) {
-            .card {
-                padding: 1.2rem 1rem 2rem;
-            }
-            .question-headline {
-                font-size: 2rem;
-            }
-            .btn {
-                font-size: 1rem;
-                padding: 0.7rem 1.8rem;
-                min-width: 90px;
-            }
-            .friend-gif,
-            .result-gif {
-                width: 150px;
-                height: 150px;
-            }
-            .result-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    .back-link {
+      margin-top: 25px;
+      font-size: 0.9rem;
+      color: #7a5a62;
+      opacity: 0.7;
+      text-decoration: none;
+      border-bottom: 1px dashed #c0a0a8;
+      transition: opacity 0.2s;
+      display: inline-block;
+    }
+    .back-link:hover {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="card js-main-card">
+  <!-- Main Question UI -->
+  <div class="question-container js-question-container">
+    <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
 
-        <!-- question block -->
-        <div class="js-question-block">
-            <img class="friend-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="cute bears" />
-            <h2 class="question-headline">
-                <span>या तुम मेरे दोस्त बनोगे?</span>
-            </h2>
-            <div class="button-pair">
-                <button class="btn btn-yes js-yes-btn">✔️ Yes</button>
-                <button class="btn btn-no js-no-btn">✖️ No</button>
-            </div>
-        </div>
+    <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
 
-        <!-- result block -->
-        <div class="result-panel js-result-panel">
-            <img class="result-gif" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="celebration" />
-            <div class="result-title">
-                <span class="emoji-big">🥳</span> बन गए ना मेरे दोस्त! <span class="emoji-big">😁😂😍</span>
-            </div>
-        </div>
-
-        <!-- वापस index.html पर जाने का लिंक (ऑप्शनल) -->
-        <a href="index.html" class="back-link">⬅️ वापस मुख्य पेज पर</a>
+    <div class="button-container">
+      <button class="btn yes-btn js-yes-btn">Yes</button>
+      <button class="btn no-btn js-no-btn">No</button>
     </div>
 
-    <!-- loader -->
-    <div class="loader-wrapper js-loader-wrapper">
-        <div class="cssload-main">
-            <div class="cssload-heart">
-                <span class="cssload-heartL"></span>
-                <span class="cssload-heartR"></span>
-                <span class="cssload-square"></span>
-            </div>
-            <div class="cssload-shadow"></div>
-        </div>
+    <a href="index.html" class="back-link">⬅️ वापस मुख्य पेज पर</a>
+  </div>
+
+  <!-- Success UI -->
+  <div class="result-container js-result-container">
+    <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
+    <h2>Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
+    <a href="index.html" class="back-link">⬅️ वापस मुख्य पेज पर</a>
+  </div>
+
+  <!-- Loading Animation -->
+  <div class="cssload-main js-cssload-main">
+    <div class="cssload-heart">
+      <span class="cssload-heartL"></span>
+      <span class="cssload-heartR"></span>
+      <span class="cssload-square"></span>
     </div>
+    <div class="cssload-shadow"></div>
+  </div>
 
-    <script>
-        (function() {
-            "use strict";
+  <script>
+    const questionContainer = document.querySelector(".js-question-container");
+    const resultContainer = document.querySelector(".js-result-container");
+    const heartLoader = document.querySelector(".js-cssload-main");
+    const yesBtn = document.querySelector(".js-yes-btn");
+    const noBtn = document.querySelector(".js-no-btn");
 
-            const questionBlock = document.querySelector('.js-question-block');
-            const resultPanel = document.querySelector('.js-result-panel');
-            const loaderWrapper = document.querySelector('.js-loader-wrapper');
-            const yesBtn = document.querySelector('.js-yes-btn');
-            const noBtn = document.querySelector('.js-no-btn');
-            const mainCard = document.querySelector('.js-main-card');
+    const moveNoBtn = () => {
+      noBtn.style.position = 'fixed';
 
-            function moveNoButton() {
-                noBtn.style.position = 'fixed';
-                noBtn.style.zIndex = '999';
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
 
-                const btnWidth = noBtn.offsetWidth || 110;
-                const btnHeight = noBtn.offsetHeight || 50;
-                const maxX = window.innerWidth - btnWidth - 20;
-                const maxY = window.innerHeight - btnHeight - 20;
+      const newX = Math.max(20, Math.floor(Math.random() * maxX));
+      const newY = Math.max(20, Math.floor(Math.random() * maxY));
 
-                const newX = Math.max(10, Math.min(maxX, Math.floor(Math.random() * (maxX - 10 + 1) + 10)));
-                const newY = Math.max(10, Math.min(maxY, Math.floor(Math.random() * (maxY - 10 + 1) + 10)));
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    };
 
-                noBtn.style.left = newX + 'px';
-                noBtn.style.top = newY + 'px';
-            }
+    noBtn.addEventListener("mouseover", moveNoBtn);
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoBtn();
+    });
 
-            noBtn.addEventListener('mouseover', function(e) {
-                e.stopPropagation();
-                if (noBtn.style.position !== 'fixed') {
-                    noBtn.style.position = 'fixed';
-                }
-                moveNoButton();
-            });
+    yesBtn.addEventListener("click", () => {
+      questionContainer.style.display = "none";
+      heartLoader.style.display = "block";
 
-            noBtn.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                if (noBtn.style.position !== 'fixed') {
-                    noBtn.style.position = 'fixed';
-                }
-                moveNoButton();
-            }, { passive: false });
-
-            window.addEventListener('resize', function() {
-                if (noBtn.style.position === 'fixed') {
-                    const btnWidth = noBtn.offsetWidth || 110;
-                    const btnHeight = noBtn.offsetHeight || 50;
-                    const maxX = window.innerWidth - btnWidth - 20;
-                    const maxY = window.innerHeight - btnHeight - 20;
-                    let currentLeft = parseFloat(noBtn.style.left) || 20;
-                    let currentTop = parseFloat(noBtn.style.top) || 20;
-                    if (currentLeft > maxX) noBtn.style.left = Math.max(10, maxX) + 'px';
-                    if (currentTop > maxY) noBtn.style.top = Math.max(10, maxY) + 'px';
-                    if (currentLeft < 10) noBtn.style.left = '10px';
-                    if (currentTop < 10) noBtn.style.top = '10px';
-                }
-            });
-
-            yesBtn.addEventListener('click', function() {
-                questionBlock.style.display = 'none';
-                loaderWrapper.style.display = 'flex';
-
-                setTimeout(function() {
-                    loaderWrapper.style.display = 'none';
-                    resultPanel.style.display = 'flex';
-                    noBtn.style.display = 'none';
-                    mainCard.style.background = 'rgba(255, 240, 242, 0.8)';
-                }, 3000);
-            });
-
-            noBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (noBtn.style.position !== 'fixed') {
-                    noBtn.style.position = 'fixed';
-                }
-                moveNoButton();
-            });
-
-        })();
-    </script>
+      setTimeout(() => {
+        heartLoader.style.display = "none";
+        resultContainer.style.display = "flex";
+      }, 3000);
+    });
+  </script>
 
 </body>
 </html>
