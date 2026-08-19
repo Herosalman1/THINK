@@ -448,7 +448,77 @@
 
     <script>
         // ================================================================
-        // 1. GENERATOR MODE LOGIC
+        // सबसे पहले चेक करो: क्या URL में ?d= है?
+        // ================================================================
+        (function checkAndSwitchMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const encodedData = urlParams.get('d');
+
+            if (encodedData) {
+                // SURPRISE MODE ON
+                document.getElementById('generatorMode').style.display = 'none';
+                document.getElementById('surpriseMode').style.display = 'flex';
+
+                try {
+                    const jsonString = decodeURIComponent(escape(atob(encodedData)));
+                    const data = JSON.parse(jsonString);
+
+                    // Name और Message Set करो
+                    const nameDisplay = document.getElementById('friendNameDisplay');
+                    const msgDisplay = document.getElementById('customMsgDisplay');
+
+                    nameDisplay.textContent = data.n || 'तुम';
+                    msgDisplay.innerHTML = `💝 ${data.m || 'तुम बहुत खास हो!'} 💝`;
+
+                } catch (e) {
+                    // अगर डिकोड करने में गड़बड़ी हो, तो डिफ़ॉल्ट MSG दिखाओ
+                    console.log("Error decoding data:", e);
+                }
+
+                // ===== GAME LOGIC (सिर्फ सरप्राइज़ मोड में) =====
+                const questionContainer = document.querySelector(".js-question-container");
+                const resultContainer = document.querySelector(".js-result-container");
+                const heartLoader = document.querySelector(".js-cssload-main");
+                const yesBtn = document.querySelector(".js-yes-btn");
+                const noBtn = document.querySelector(".js-no-btn");
+
+                const moveNoBtn = () => {
+                    noBtn.style.position = 'fixed';
+
+                    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+                    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+                    const newX = Math.max(20, Math.floor(Math.random() * maxX));
+                    const newY = Math.max(20, Math.floor(Math.random() * maxY));
+
+                    noBtn.style.left = `${newX}px`;
+                    noBtn.style.top = `${newY}px`;
+                };
+
+                noBtn.addEventListener("mouseover", moveNoBtn);
+                noBtn.addEventListener("touchstart", (e) => {
+                    e.preventDefault();
+                    moveNoBtn();
+                });
+
+                yesBtn.addEventListener("click", () => {
+                    questionContainer.style.display = "none";
+                    heartLoader.style.display = "block";
+
+                    setTimeout(() => {
+                        heartLoader.style.display = "none";
+                        resultContainer.style.display = "flex";
+                    }, 3000);
+                });
+
+            } else {
+                // GENERATOR MODE ON - पहले से ही display:flex है
+                console.log("Generator Mode Active");
+            }
+        })();
+
+        // ================================================================
+        // GENERATOR FUNCTIONS (सिर्फ जनरेटर मोड के लिए)
         // ================================================================
         function generateLink() {
             const name = document.getElementById('friendName').value.trim();
@@ -459,13 +529,10 @@
                 return;
             }
 
-            // Data को encode करो
             const payload = { n: name, m: msg };
             const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
 
-            // Current URL से surprise.html को हटाओ (अगर है तो)
             let baseUrl = window.location.href.split('?')[0];
-            // अगर URL में surprise.html है तो उसे हटाओ
             if (baseUrl.includes('surprise.html')) {
                 baseUrl = baseUrl.replace('surprise.html', '');
             }
@@ -486,7 +553,6 @@
             navigator.clipboard.writeText(linkText).then(() => {
                 alert("✅ लिंक कॉपी हो गया! अब WhatsApp पर भेजो 🎉");
             }).catch(() => {
-                // Fallback
                 const textArea = document.createElement('textarea');
                 textArea.value = linkText;
                 document.body.appendChild(textArea);
@@ -495,79 +561,6 @@
                 document.body.removeChild(textArea);
                 alert("✅ लिंक कॉपी हो गया!");
             });
-        }
-
-        // ================================================================
-        // 2. SURPRISE MODE LOGIC (URL से Data पढ़ो)
-        // ================================================================
-        function getDataFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const encodedData = urlParams.get('d');
-
-            if (!encodedData) return null;
-
-            try {
-                const jsonString = decodeURIComponent(escape(atob(encodedData)));
-                return JSON.parse(jsonString);
-            } catch (e) {
-                return null;
-            }
-        }
-
-        // चेक करो कि URL में ?d= है या नहीं
-        const data = getDataFromURL();
-
-        if (data) {
-            // SURPRISE MODE ON
-            document.getElementById('generatorMode').style.display = 'none';
-            document.getElementById('surpriseMode').style.display = 'flex';
-
-            // Name और Message Set करो
-            const nameDisplay = document.getElementById('friendNameDisplay');
-            const msgDisplay = document.getElementById('customMsgDisplay');
-
-            nameDisplay.textContent = data.n || 'तुम';
-            msgDisplay.innerHTML = `💝 ${data.m || 'तुम बहुत खास हो!'} 💝`;
-
-            // ===== GAME LOGIC =====
-            const questionContainer = document.querySelector(".js-question-container");
-            const resultContainer = document.querySelector(".js-result-container");
-            const heartLoader = document.querySelector(".js-cssload-main");
-            const yesBtn = document.querySelector(".js-yes-btn");
-            const noBtn = document.querySelector(".js-no-btn");
-
-            const moveNoBtn = () => {
-                noBtn.style.position = 'fixed';
-
-                const maxX = window.innerWidth - noBtn.offsetWidth - 20;
-                const maxY = window.innerHeight - noBtn.offsetHeight - 20;
-
-                const newX = Math.max(20, Math.floor(Math.random() * maxX));
-                const newY = Math.max(20, Math.floor(Math.random() * maxY));
-
-                noBtn.style.left = `${newX}px`;
-                noBtn.style.top = `${newY}px`;
-            };
-
-            noBtn.addEventListener("mouseover", moveNoBtn);
-            noBtn.addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                moveNoBtn();
-            });
-
-            yesBtn.addEventListener("click", () => {
-                questionContainer.style.display = "none";
-                heartLoader.style.display = "block";
-
-                setTimeout(() => {
-                    heartLoader.style.display = "none";
-                    resultContainer.style.display = "flex";
-                }, 3000);
-            });
-
-        } else {
-            // GENERATOR MODE ON - पहले से ही display:flex है
-            console.log("Generator Mode Active");
         }
     </script>
 
