@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-  <title>Prank Link Generator</title>
+  <title>Surprise For You!</title>
 
   <style>
     * {
@@ -27,9 +27,10 @@
     }
 
     /* =========================================
-       1. PREMIUM GENERATOR UI (White Box)
+       1. PREMIUM GENERATOR UI (Hidden by Default)
        ========================================= */
     #generator-ui { 
+        display: none; /* YE AB BY DEFAULT CHHUPA RAHEGA */
         background: #ffffff; 
         padding: 40px 35px; 
         border-radius: 24px; 
@@ -251,25 +252,25 @@
 
   <!-- ================= JAVASCRIPT ================= -->
   <script>
-    // 1. CHECK URL FOR DATA
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const dataParam = urlParams.get('d');
+    // 1. FAST CHECK: Bina wait kiye instantly decide karo kya dikhana hai
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataParam = urlParams.get('d');
+    
+    if (dataParam) {
+        // Dost ne link khola hai -> Seedha Prank dikhao (Form hidden hi rahega)
+        document.getElementById('prank-ui').style.display = 'flex';
         
-        // Agar dost ne link khola hai
-        if (dataParam) {
-            document.getElementById('generator-ui').style.display = 'none';
-            document.getElementById('prank-ui').style.display = 'flex';
-            
-            try {
-                const decoded = JSON.parse(decodeURIComponent(escape(atob(dataParam))));
-                if(decoded.q) document.getElementById('dynamic-question').innerText = decoded.q;
-                if(decoded.s) document.getElementById('dynamic-success').innerText = decoded.s;
-            } catch(e) {
-                console.log("Link error:", e);
-            }
+        try {
+            const decoded = JSON.parse(decodeURIComponent(escape(atob(dataParam))));
+            if(decoded.q) document.getElementById('dynamic-question').innerText = decoded.q;
+            if(decoded.s) document.getElementById('dynamic-success').innerText = decoded.s;
+        } catch(e) {
+            console.log("Link error:", e);
         }
-    };
+    } else {
+        // Aapne khola hai (Koi Data nahi hai) -> Form dikhao
+        document.getElementById('generator-ui').style.display = 'block';
+    }
 
     // 2. LINK GENERATOR FUNCTION
     function generateLink() {
@@ -318,12 +319,12 @@
     noBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveNoBtn(); });
 
     yesBtn.addEventListener("click", () => {
-      questionContainer.style.display = "none";
+      document.getElementById('prank-ui').style.display = "none";
       heartLoader.style.display = "block";
 
       setTimeout(() => {
         heartLoader.style.display = "none";
-        resultContainer.style.display = "flex"; 
+        document.getElementById('success-ui').style.display = "flex"; 
       }, 3000);
     });
   </script>
