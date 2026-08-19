@@ -1,155 +1,287 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>❤️ तुम्हारे लिए एक खास पेज</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+  <title>Do you love me?</title>
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #fce4ec 0%, #f8d7da 100%);
-            font-family: "Quicksand", sans-serif;
-            overflow: hidden;
-        }
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
 
-        .card {
-            background: rgba(255, 245, 247, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 3rem 2.5rem;
-            border-radius: 60px;
-            box-shadow: 0 25px 50px rgba(190, 90, 100, 0.25);
-            text-align: center;
-            max-width: 550px;
-            width: 92%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #fae6e9;
+      font-family: "Quicksand", sans-serif;
+      overflow: hidden;
+    }
 
-        .heart-icon {
-            font-size: 4rem;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
+    .question-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
 
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-        }
+    .local-gif {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      pointer-events: none;
+      background-color: transparent;
+    }
 
-        h1 {
-            font-size: 2.4rem;
-            color: #2d1b1f;
-            margin: 0.8rem 0 0.5rem;
-            font-weight: 700;
-        }
+    .question {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 25px;
+      letter-spacing: -0.5px;
+    }
 
-        .message-box {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 1.5rem 1.8rem;
-            border-radius: 30px;
-            margin: 1.5rem 0;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #2d1b1f;
-            font-weight: 500;
-            border: 1px solid rgba(255, 200, 210, 0.3);
-        }
+    .button-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .message-box .highlight {
-            color: #e0556a;
-            font-weight: 700;
-        }
+    .btn {
+      border: none;
+      border-radius: 50px;
+      padding: 10px 32px;
+      font-family: "Quicksand", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: #ef6e7e;
+      color: white;
+      box-shadow: 0px 8px 15px rgba(239, 110, 126, 0.35);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
 
-        .btn-surprise {
-            background: #ec6b7a;
-            color: white;
-            border: none;
-            border-radius: 120px;
-            padding: 1rem 3rem;
-            font-family: "Quicksand", sans-serif;
-            font-weight: 700;
-            font-size: 1.3rem;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(225, 80, 100, 0.4);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            margin-top: 0.5rem;
-            text-decoration: none;
-            display: inline-block;
-        }
+    .btn:hover {
+      background-color: #df5869;
+      transform: scale(1.05);
+    }
 
-        .btn-surprise:hover {
-            transform: scale(1.05);
-            box-shadow: 0 14px 35px rgba(225, 80, 100, 0.5);
-            background: #de5b6b;
-        }
+    .no-btn {
+      transition: top 0.2s ease, left 0.2s ease;
+    }
 
-        .btn-surprise:active {
-            transform: scale(0.97);
-        }
+    .result-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
 
-        .footer-note {
-            margin-top: 1.8rem;
-            font-size: 0.95rem;
-            color: #7a5a62;
-            opacity: 0.8;
-        }
+    .gif-result {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
 
-        @media (max-width: 500px) {
-            .card {
-                padding: 2rem 1.5rem;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .message-box {
-                font-size: 1rem;
-                padding: 1rem 1.2rem;
-            }
-            .btn-surprise {
-                font-size: 1rem;
-                padding: 0.8rem 2rem;
-            }
-        }
-    </style>
+    .result-container h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .cssload-main {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+    }
+
+    .cssload-main * {
+      font-size: 62px;
+    }
+
+    .cssload-heart {
+      animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+    }
+
+    .cssload-heartL,
+    .cssload-heartR,
+    .cssload-square {
+      width: 1em;
+      height: 1em;
+      background-color: #ff0000;
+      border: 1px solid #ff0000;
+      position: absolute;
+      display: block;
+    }
+
+    .cssload-heartL {
+      border-radius: 100%;
+      transform: translate(-28px, -27px);
+      animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-heartR {
+      border-radius: 100%;
+      transform: translate(28px, -27px);
+      animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-square {
+      transform: scale(1) rotate(-45deg);
+      animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-shadow {
+      top: 97px;
+      left: 50%;
+      position: relative;
+      display: block;
+      width: 1em;
+      height: 0.24em;
+      background-color: rgb(215, 215, 215);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    @keyframes cssload-square {
+      50% {
+        border-radius: 100%;
+        transform: scale(0.5) rotate(-45deg);
+      }
+      100% {
+        transform: scale(1) rotate(-45deg);
+      }
+    }
+    @keyframes cssload-heart {
+      50% {
+        transform: rotate(360deg);
+      }
+      100% {
+        transform: rotate(720deg);
+      }
+    }
+    @keyframes cssload-heartL {
+      60% {
+        transform: scale(0.4) translate(-28px, -27px);
+      }
+    }
+    @keyframes cssload-heartR {
+      40% {
+        transform: scale(0.4) translate(28px, -27px);
+      }
+    }
+    @keyframes cssload-shadow {
+      50% {
+        transform: translateX(-50%) scale(0.5);
+      }
+    }
+
+    .back-link {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #7a5a62;
+      opacity: 0.7;
+      text-decoration: none;
+      border-bottom: 1px dashed #c0a0a8;
+      transition: opacity 0.2s;
+      display: inline-block;
+    }
+    .back-link:hover {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="card">
-        <!-- ❤️ इमोजी एनीमेशन -->
-        <div class="heart-icon">❤️</div>
+  <!-- Main Question UI -->
+  <div class="question-container js-question-container">
+    <img class="local-gif" src="https://media.tenor.com/hlr3kptkdu4AAAAj/bubu-dudu.gif" alt="Cute Bears">
 
-        <h1>✨ तुम्हारे लिए... ✨</h1>
+    <h2 class="question">या तुम मेरे दोस्त बनोगे?</h2>
 
-        <!-- 👇 यहाँ अपना प्यारा सा संदेश लिखो -->
-        <div class="message-box">
-            <p>
-                तुम मेरी ज़िंदगी की <span class="highlight">खास</span> वजह हो 🥰<br />
-                तुम्हारी मुस्कान मेरा दिन बना देती है 🌸<br />
-                बस यही कहना था...<br />
-                <span style="font-size:1.4rem;">💖 तुम बहुत खास हो 💖</span>
-            </p>
-        </div>
-
-        <!-- 👇 यह बटन surprise.html खोलेगा -->
-        <a href="surprise.html" class="btn-surprise">🎁 सरप्राइज़ देखो 🎁</a>
-
-        <div class="footer-note">💫 दिल से दिल तक... ❤️</div>
+    <div class="button-container">
+      <button class="btn yes-btn js-yes-btn">Yes</button>
+      <button class="btn no-btn js-no-btn">No</button>
     </div>
+
+    <!-- वापस index.html पर जाने का लिंक -->
+    <a href="index.html" class="back-link" style="margin-top:25px;">⬅️ वापस मुख्य पेज पर</a>
+  </div>
+
+  <!-- Success UI -->
+  <div class="result-container js-result-container">
+    <img class="gif-result" src="https://media.tenor.com/uK14vJSZ2zMAAAAi/wow.gif" alt="Happy Bears">
+    <h2>Hehehe...बन गए ना मेरे दोस्त 😁😂😍!</h2>
+    <a href="index.html" class="back-link" style="margin-top:25px;">⬅️ वापस मुख्य पेज पर</a>
+  </div>
+
+  <!-- Loading Animation -->
+  <div class="cssload-main js-cssload-main">
+    <div class="cssload-heart">
+      <span class="cssload-heartL"></span>
+      <span class="cssload-heartR"></span>
+      <span class="cssload-square"></span>
+    </div>
+    <div class="cssload-shadow"></div>
+  </div>
+
+  <script>
+    const questionContainer = document.querySelector(".js-question-container");
+    const resultContainer = document.querySelector(".js-result-container");
+    const heartLoader = document.querySelector(".js-cssload-main");
+    const yesBtn = document.querySelector(".js-yes-btn");
+    const noBtn = document.querySelector(".js-no-btn");
+
+    const moveNoBtn = () => {
+      noBtn.style.position = 'fixed';
+
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+      const newX = Math.max(20, Math.floor(Math.random() * maxX));
+      const newY = Math.max(20, Math.floor(Math.random() * maxY));
+
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    };
+
+    noBtn.addEventListener("mouseover", moveNoBtn);
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoBtn();
+    });
+
+    yesBtn.addEventListener("click", () => {
+      questionContainer.style.display = "none";
+      heartLoader.style.display = "block";
+
+      setTimeout(() => {
+        heartLoader.style.display = "none";
+        resultContainer.style.display = "flex";
+      }, 3000);
+    });
+  </script>
 
 </body>
 </html>
