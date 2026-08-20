@@ -62,13 +62,32 @@
     }
     #generateBtn:hover { background-color: #df5869; }
     
+    /* Updated Result Box CSS */
     .result-box { 
         display: none; background: #fff0f3; padding: 20px; border-radius: 16px; 
-        margin-top: 15px; word-break: break-all; font-size: 0.9rem; border: 1.5px dashed #ffb3c6;
+        margin-top: 15px; border: 1.5px dashed #ffb3c6;
     }
-    #copyBtn {
-        background: #ef6e7e; color: white; border: none; padding: 12px; width: 100%;
-        border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 10px;
+    
+    /* New Side-by-Side Button CSS */
+    .action-btns-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .action-btn {
+        background: #ef6e7e;
+        color: white;
+        border: none;
+        padding: 12px;
+        flex: 1;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: background 0.2s;
+    }
+    .action-btn:hover {
+        background-color: #df5869;
     }
 
     /* =========================================
@@ -217,10 +236,17 @@
     
     <button id="generateBtn" onclick="generateLink()">✨ Generate Link</button>
 
+    <!-- Updated Result Box Area -->
     <div id="resultBox" class="result-box">
-        <p style="font-weight: 700; color: #ef6e7e; margin-bottom: 8px;">Copy and Send to Friend:</p>
-        <p id="generatedUrl" style="margin-bottom: 10px; font-weight: 600; color: #333; word-break: break-all;"></p>
-        <button id="copyBtn" onclick="copyLink()">📋 Copy Link</button>
+        <p style="font-weight: 700; color: #ef6e7e; text-align: center; font-size: 1.1rem; margin-bottom: 5px;">Link Generated! 🎉</p>
+        
+        <!-- Hidden URL text to store the link -->
+        <p id="generatedUrl" style="display: none;"></p>
+        
+        <div class="action-btns-container">
+            <button class="action-btn" id="copyBtn" onclick="copyLink()">Copy Link 📋</button>
+            <button class="action-btn" id="previewBtn" onclick="previewLink()">Click To Preview 🚀</button>
+        </div>
     </div>
   </div>
 
@@ -276,7 +302,7 @@
         document.getElementById('generator-ui').style.display = 'block';
     }
 
-    // 2. LINK GENERATOR (Fixed URL Encoding Issue)
+    // 2. LINK GENERATOR
     function generateLink() {
         const q = document.getElementById('qInput').value.trim();
         const s = document.getElementById('sInput').value.trim();
@@ -292,8 +318,12 @@
         let baseUrl = window.location.href.split('?')[0];
         const finalLink = `${baseUrl}?d=${safeEncodedData}`;
         
+        // Storing link in hidden text
         document.getElementById('generatedUrl').innerText = finalLink;
         document.getElementById('resultBox').style.display = 'block';
+        
+        // Reset copy button text just in case
+        document.getElementById('copyBtn').innerText = "Copy Link 📋";
     }
 
     function copyLink() {
@@ -301,8 +331,16 @@
         navigator.clipboard.writeText(linkText).then(() => {
             const btn = document.getElementById('copyBtn');
             btn.innerText = "✅ Copied!";
-            setTimeout(() => { btn.innerText = "📋 Copy Link"; }, 2000);
+            setTimeout(() => { btn.innerText = "Copy Link 📋"; }, 2000);
         });
+    }
+
+    // New Function for Preview Button
+    function previewLink() {
+        const linkText = document.getElementById('generatedUrl').innerText;
+        if(linkText) {
+            window.open(linkText, '_blank');
+        }
     }
 
     // 3. ORIGINAL PRANK LOGIC
